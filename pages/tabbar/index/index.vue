@@ -19,11 +19,14 @@
 		},
 		methods: {
 			getLabel() {
-				uniCloud.callFunction({
-					name:'get_label'
-				}).then((res)=>{
-					const {result} = res
-					this.tabList = result.data
+				// console.log(this.$api)
+				this.$api.get_label({
+					name: 'get_label'
+				}).then((res) => {
+					const {
+						data
+					} = res
+					this.tabList = data
 				})
 			}
 		}

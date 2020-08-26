@@ -2,7 +2,6 @@
 const db = uniCloud.database()
 exports.main = async (event, context) => {
 	let label = await db.collection('label').get()
-	console.log(label.data)
 	
 	return {
 		code: 200,
