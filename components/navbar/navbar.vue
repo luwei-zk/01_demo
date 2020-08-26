@@ -15,7 +15,7 @@
             </view>
         </view>
         <!-- 占位符 -->
-        <view :style="{height: navBarHeight + 'px'}"></view>
+        <view :style="{height: navBarHeight + statusBarHeight + 'px'}"></view>
     </view>
 </template>
 

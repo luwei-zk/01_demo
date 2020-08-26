@@ -1,1 +1,1 @@
-<view class="data-v-6b1f4146"><navbar vue-id="f8c7e56e-1" class="data-v-6b1f4146" bind:__l="__l"></navbar></view>
+<view class="data-v-6b1f4146"><navbar vue-id="f8c7e56e-1" class="data-v-6b1f4146" bind:__l="__l"></navbar><tab vue-id="f8c7e56e-2" class="data-v-6b1f4146" bind:__l="__l"></tab></view>

@@ -100,6 +100,9 @@ __webpack_require__.r(__webpack_exports__);
 var components = {
   navbar: function() {
     return __webpack_require__.e(/*! import() | components/navbar/navbar */ "components/navbar/navbar").then(__webpack_require__.bind(null, /*! @/components/navbar/navbar.vue */ 30))
+  },
+  tab: function() {
+    return __webpack_require__.e(/*! import() | components/tab/tab */ "components/tab/tab").then(__webpack_require__.bind(null, /*! @/components/tab/tab.vue */ 38))
   }
 }
 var render = function() {
@@ -138,6 +141,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
 //
 //
 //

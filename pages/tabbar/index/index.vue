@@ -1,6 +1,9 @@
 <template>
 	<view>
+		<!-- 导航栏 -->
 		<navbar></navbar>
+		<!-- 选项卡 -->
+		<tab></tab>
 	</view>
 </template>
 
