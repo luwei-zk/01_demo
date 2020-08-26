@@ -142,10 +142,19 @@ var _default2 =
 
 
   data: function data() {
-    return {};
+    return {
+      activeIndex: 0 };
 
+  },
+  methods: {
+    // 子组件传递事件
+    clickTab: function clickTab(item, index) {
+      this.activeIndex = index;
+      this.$emit('tab', {
+        data: item,
+        index: index });
 
-  } };exports.default = _default2;
+    } } };exports.default = _default2;
 
 /***/ }),
 

@@ -176,6 +176,14 @@ var _default =
         res.data;
         _this.tabList = data;
       });
+    },
+    // 从tab.vue 传递过来的选项卡点击事件数据
+    tab: function tab(_ref)
+
+
+    {var data = _ref.data,index = _ref.index;
+      // 暂做保留
+      console.log(data, index);
     } } };exports.default = _default;
 
 /***/ })

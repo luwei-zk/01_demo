@@ -59,6 +59,9 @@
   color: #333;
   font-size: 14px;
 }
+.tab .tab-scroll .tab-scroll_box .tab-scroll_item.active.data-v-10e0b530 {
+  color: #f07373;
+}
 .tab .tab-icons.data-v-10e0b530 {
   position: relative;
   display: -webkit-box;
