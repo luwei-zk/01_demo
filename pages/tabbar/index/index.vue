@@ -1,9 +1,11 @@
 <template>
-	<view>
+	<view class="home">
 		<!-- 导航栏 -->
 		<navbar></navbar>
 		<!-- 选项卡 -->
 		<tab :list='tabList' @tab="tab"></tab>
+		<!-- 中部滚动 -->
+		<list-scroll></list-scroll>
 	</view>
 </template>
 
@@ -42,4 +44,16 @@
 </script>
 
 <style lang="scss" scoped>
+	page {
+		display: flex;
+		height: 100%;
+	}
+
+	.home {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		border: 1px solid red;
+
+	}
 </style>
