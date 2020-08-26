@@ -140,7 +140,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -153,13 +153,22 @@ var _default =
 {
   data: function data() {
     return {
-      title: 'Hello' };
+      tabList: [] };
 
   },
   onLoad: function onLoad() {
-
+    this.getLabel();
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    getLabel: function getLabel() {var _this = this;
+      uniCloud.callFunction({
+        name: 'get_label' }).
+      then(function (res) {var
+        result = res.result;
+        _this.tabList = result.data;
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 55)["default"]))
 
 /***/ })
 ],[[11,"common/runtime","common/vendor"]]]);

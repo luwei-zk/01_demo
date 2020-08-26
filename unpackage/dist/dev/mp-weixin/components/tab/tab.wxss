@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.tab {
+.tab.data-v-10e0b530 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -33,14 +33,14 @@
   background-color: #fff;
   box-sizing: border-box;
 }
-.tab .tab-scroll {
+.tab .tab-scroll.data-v-10e0b530 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
   overflow: hidden;
   box-sizing: border-box;
 }
-.tab .tab-scroll .tab-scroll_box {
+.tab .tab-scroll .tab-scroll_box.data-v-10e0b530 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -52,14 +52,14 @@
   height: 45px;
   box-sizing: border-box;
 }
-.tab .tab-scroll .tab-scroll_box .tab-scroll_item {
+.tab .tab-scroll .tab-scroll_box .tab-scroll_item.data-v-10e0b530 {
   -webkit-flex-shrink: 0;
           flex-shrink: 0;
   padding: 0 10px;
   color: #333;
   font-size: 14px;
 }
-.tab .tab-icons {
+.tab .tab-icons.data-v-10e0b530 {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -72,7 +72,7 @@
           align-items: center;
   width: 45px;
 }
-.tab .tab-icons::after {
+.tab .tab-icons.data-v-10e0b530::after {
   content: '';
   position: absolute;
   top: 12px;
