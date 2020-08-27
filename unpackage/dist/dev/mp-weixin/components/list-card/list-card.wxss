@@ -42,7 +42,7 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.listcard .listcard-image image.data-v-cb743578 {
+.listcard .listcard-image .listcard-image_img.data-v-cb743578 {
   width: 100%;
   height: 100%;
 }
@@ -61,14 +61,12 @@
   width: 100%;
 }
 .listcard .listcard-content .listcard-content_title.data-v-cb743578 {
-  padding-right: 30px;
-  position: relative;
   font-size: 14px;
   color: #333;
   font-weight: 400;
   line-height: 1.2;
 }
-.listcard .listcard-content .listcard-content_title text.data-v-cb743578 {
+.listcard .listcard-content .listcard-content_title .listcard-content_title-text.data-v-cb743578 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -99,56 +97,5 @@
 .listcard .listcard-content .listcard-content_des .listcard-content_des-browse.data-v-cb743578 {
   color: #999;
   line-height: 1.5;
-}
-.listcard.mode-column .listcard-content.data-v-cb743578 {
-  width: 100%;
-  padding-left: 0;
-}
-.listcard.mode-column .listcard-image.data-v-cb743578 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  margin-top: 10px;
-  width: 100%;
-  height: 80px;
-}
-.listcard.mode-column .listcard-image .listcard-image_item.data-v-cb743578 {
-  margin-left: 10px;
-  width: 100%;
-  border-radius: 5px;
-  overflow: hidden;
-}
-.listcard.mode-column .listcard-image .listcard-image_item.data-v-cb743578:first-child {
-  margin-left: 0;
-}
-.listcard.mode-column .listcard-image .listcard-image_item image.data-v-cb743578 {
-  width: 100%;
-  height: 100%;
-}
-.listcard.mode-column .listcard-content_des.data-v-cb743578 {
-  margin-top: 10px;
-}
-.listcard.mode-image.data-v-cb743578 {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-}
-.listcard.mode-image .listcard-image.data-v-cb743578 {
-  width: 100%;
-  height: 100px;
-}
-.listcard.mode-image .listcard-content.data-v-cb743578 {
-  padding-left: 0;
-  margin-top: 10px;
-}
-.listcard.mode-image .listcard-content .listcard-content_des.data-v-cb743578 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  margin-top: 10px;
 }
 

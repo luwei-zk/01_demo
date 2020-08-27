@@ -1,11 +1,7 @@
 <template>
 	<view class="scroll">
-		<scroll-view class="list-scroll" scroll-y>
-			<view>
-				<view v-for="(item,index) in 100" :key="index">
-					{{item}}
-				</view>
-			</view>
+		<scroll-view class="list-scroll" scroll-y enable-flex>
+			<slot></slot>
 		</scroll-view>
 	</view>
 </template>

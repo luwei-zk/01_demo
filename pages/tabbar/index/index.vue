@@ -4,8 +4,11 @@
 		<navbar></navbar>
 		<!-- 选项卡 -->
 		<tab :list='tabList' @tab="tab"></tab>
-		<!-- 中部滚动 -->
-		<list-scroll></list-scroll>
+		<!-- 中部滚动布局 -->
+		<list-scroll>
+			<!-- 卡片视图 -->
+			<list-card v-for="item in 5"></list-card>
+		</list-scroll>
 	</view>
 </template>
 
