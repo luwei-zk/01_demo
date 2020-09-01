@@ -5,7 +5,7 @@
 	},
 	"setting": {
 		"urlCheck": false,
-		"es6": true,
+		"es6": false,
 		"enhance": false,
 		"postcss": true,
 		"preloadBackgroundData": false,
@@ -27,13 +27,13 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "",
-	"appid": "touristappid",
-	"projectname": "demo",
+	"appid": "wxec768ab5bd367831",
+	"projectname": "zk-cloud",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

@@ -170,6 +170,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -192,11 +194,8 @@ var _default =
         _this.tabList = data;
       });
     },
-    // 从tab.vue 传递过来的选项卡点击事件数据
-    tab: function tab(_ref)
-
-
-    {var data = _ref.data,index = _ref.index;
+    // 从 tab传递过来的数据
+    tab: function tab(_ref) {var data = _ref.data,index = _ref.index;
       // 暂做保留
       console.log(data, index);
     } } };exports.default = _default;
