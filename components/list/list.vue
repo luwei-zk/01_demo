@@ -31,19 +31,19 @@
 		},
 		// onload 是在页面中,created 是在组件中
 		created() {
-			this.getList()
+			// 默认获取后端开发
+			this.getList('后端开发')
 		},
 		methods: {
 			// 选项卡自带滑动事件触发
 			change(e) {
-				const {
-					current
-				} = e.detail
+				const {current } = e.detail
+				this.getList(this.tab[current].name)
 				this.$emit('change', current)
 			},
 			// 获取选项卡内容
-			getList() {
-				this.$api.get_list().then(res=>{
+			getList(name) {
+				this.$api.get_list({name}).then(res=>{
 					const {data} = res
 					this.list = data
 				})

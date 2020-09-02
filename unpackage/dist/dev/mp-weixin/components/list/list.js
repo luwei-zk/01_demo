@@ -147,19 +147,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   // onload 是在页面中,created 是在组件中
   created: function created() {
-    this.getList();
+    // 默认获取后端开发
+    this.getList('后端开发');
   },
   methods: {
     // 选项卡自带滑动事件触发
     change: function change(e) {var
-
-      current =
-      e.detail.current;
+      current = e.detail.current;
+      this.getList(this.tab[current].name);
       this.$emit('change', current);
     },
     // 获取选项卡内容
-    getList: function getList() {var _this = this;
-      this.$api.get_list().then(function (res) {var
+    getList: function getList(name) {var _this = this;
+      this.$api.get_list({ name: name }).then(function (res) {var
         data = res.data;
         _this.list = data;
       });
