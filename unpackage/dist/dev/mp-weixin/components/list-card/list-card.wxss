@@ -42,7 +42,7 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.listcard .listcard-image .listcard-image_img.data-v-cb743578 {
+.listcard .listcard-image image.data-v-cb743578 {
   width: 100%;
   height: 100%;
 }
@@ -66,7 +66,7 @@
   font-weight: 400;
   line-height: 1.2;
 }
-.listcard .listcard-content .listcard-content_title .listcard-content_title-text.data-v-cb743578 {
+.listcard .listcard-content .listcard-content_title text.data-v-cb743578 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -119,7 +119,7 @@
 .listcard.mode-column .listcard-image .listcard-image_item.data-v-cb743578:first-child {
   margin-left: 0;
 }
-.listcard.mode-column .listcard-image .listcard-image_item .listcard-image_img.data-v-cb743578 {
+.listcard.mode-column .listcard-image .listcard-image_item image.data-v-cb743578 {
   width: 100%;
   height: 100%;
 }

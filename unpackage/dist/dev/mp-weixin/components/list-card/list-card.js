@@ -180,19 +180,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default =
+//
+var _default2 =
 {
   props: {
-    mode: {
-      type: String,
-      default: 'base' } },
+    // 传递过来的item中，有mode字段，此处可以删掉不用了
+    // mode: {
+    //  type: String,
+    //  default: 'base'
+    // },
+    item: {
+      type: Object,
+      default: function _default() {
+        return {};
+      } } },
 
 
   data: function data() {
     return {};
 
 
-  } };exports.default = _default;
+  } };exports.default = _default2;
 
 /***/ }),
 

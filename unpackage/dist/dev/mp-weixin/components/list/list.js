@@ -141,9 +141,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
   data: function data() {
-    return {};
+    return {
+      list: [] };
 
-
+  },
+  // onload 是在页面中,created 是在组件中
+  created: function created() {
+    this.getList();
   },
   methods: {
     // 选项卡自带滑动事件触发
@@ -152,6 +156,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       current =
       e.detail.current;
       this.$emit('change', current);
+    },
+    // 获取选项卡内容
+    getList: function getList() {var _this = this;
+      this.$api.get_list().then(function (res) {var
+        data = res.data;
+        _this.list = data;
+      });
     } } };exports.default = _default2;
 
 /***/ }),
