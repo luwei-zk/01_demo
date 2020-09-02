@@ -175,7 +175,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     // 获取选项卡内容
     getList: function getList(current) {var _this = this;
       this.$api.get_list({
-        name: this.tab[current].name }).
+        name: this.tab[current].name,
+        page: 1,
+        pageSize: 10 }).
       then(function (res) {var
 
         data =

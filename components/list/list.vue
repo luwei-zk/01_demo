@@ -59,7 +59,9 @@
 			// 获取选项卡内容
 			getList(current) {
 				this.$api.get_list({
-					name: this.tab[current].name
+					name: this.tab[current].name,
+					page: 1,
+					pageSize: 10
 				}).then(res => {
 					const {
 						data

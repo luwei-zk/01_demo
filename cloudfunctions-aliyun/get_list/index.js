@@ -2,7 +2,9 @@
 const db = uniCloud.database()
 exports.main = async (event, context) => {
 	const {
-		name
+		name,
+		page = 1,
+		pageSize = 10
 	} = event // 相当于 var name = event.name
 	let matchObj = {}
 	if (name !== '全部') {
@@ -17,6 +19,10 @@ exports.main = async (event, context) => {
 		.project({
 			content: 0
 		})
+		// 跳过多少数据
+		.skip(pageSize * (page - 1))
+		// 每次只取10条数据
+		.limit(pageSize)
 		.end()
 
 	return {
