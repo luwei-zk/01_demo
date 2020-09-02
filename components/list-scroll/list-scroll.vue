@@ -1,7 +1,9 @@
 <template>
 	<view class="scroll">
-		<scroll-view class="list-scroll" scroll-y enable-flex>
-			<slot></slot>
+		<scroll-view class="list-scroll" scroll-y enable-flex @scrolltolower="loadMore">
+			<view>
+				<slot></slot>
+			</view>
 		</scroll-view>
 	</view>
 </template>
@@ -12,6 +14,13 @@
 			return {
 
 			};
+		},
+		methods:{
+			loadMore() {
+				// console.log('触发上拉加载更多')
+				// 发送给 list-item
+				this.$emit('loadmore')
+			}
 		}
 	}
 </script>

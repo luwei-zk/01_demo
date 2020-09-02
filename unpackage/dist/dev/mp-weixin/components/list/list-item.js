@@ -82,6 +82,9 @@ var components = {
   },
   listCard: function() {
     return __webpack_require__.e(/*! import() | components/list-card/list-card */ "components/list-card/list-card").then(__webpack_require__.bind(null, /*! @/components/list-card/list-card.vue */ 73))
+  },
+  uniLoadMore: function() {
+    return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 96))
   }
 }
 var render = function() {
@@ -143,7 +146,12 @@ var _default2 =
     return {};
 
 
-  } };exports.default = _default2;
+  },
+  methods: {
+    // list-scroll 发送过来，发送给 list
+    loadmore: function loadmore() {
+      this.$emit('loadmore');
+    } } };exports.default = _default2;
 
 /***/ }),
 

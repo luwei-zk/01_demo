@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 88));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default2 =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 88));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default2 =
 
 
 
@@ -145,7 +145,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       // 云函数获取的数据
       list: [],
       // 云函数获取的数据缓存
-      listCacheData: {} };
+      listCacheData: {},
+      // 上拉加载更多
+      page: 1,
+      pageSize: 5 };
 
   },
   watch: {
@@ -176,15 +179,23 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     getList: function getList(current) {var _this = this;
       this.$api.get_list({
         name: this.tab[current].name,
-        page: 1,
-        pageSize: 10 }).
+        page: this.page,
+        pageSize: this.pageSize }).
       then(function (res) {var
 
         data =
         res.data;
+        // 数组push数据,首次获取之前,listCacheData[current] 为空
+        var oldList = _this.listCacheData[current] || [];
+        oldList.push.apply(oldList, _toConsumableArray(data));
         // 懒加载数据
-        _this.$set(_this.listCacheData, current, data);
+        _this.$set(_this.listCacheData, current, oldList);
       });
+    },
+    loadmore: function loadmore() {
+      // console.log('触发上拉')
+      this.page++;
+      this.getList(this.activeIndex);
     } } };exports.default = _default2;
 
 /***/ }),

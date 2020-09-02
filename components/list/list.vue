@@ -1,7 +1,7 @@
 <template>
 	<swiper class="home-swiper" :current="activeIndex" @change="change">
 		<swiper-item v-for="(item,index) in tab" :key="index" class="swiper-item">
-			<list-item :list='listCacheData[index]'></list-item>
+			<list-item :list='listCacheData[index]' @loadmore="loadmore"></list-item>
 		</swiper-item>
 	</swiper>
 </template>
@@ -29,7 +29,10 @@
 				// 云函数获取的数据
 				list: [],
 				// 云函数获取的数据缓存
-				listCacheData: {}
+				listCacheData: {},
+				// 上拉加载更多
+				page: 1,
+				pageSize: 5
 			};
 		},
 		watch: {
@@ -60,15 +63,23 @@
 			getList(current) {
 				this.$api.get_list({
 					name: this.tab[current].name,
-					page: 1,
-					pageSize: 10
+					page: this.page,
+					pageSize: this.pageSize
 				}).then(res => {
 					const {
 						data
 					} = res
+					// 数组push数据,首次获取之前,listCacheData[current] 为空
+					let oldList = this.listCacheData[current] || []
+					oldList.push(...data)
 					// 懒加载数据
-					this.$set(this.listCacheData,current,data)
+					this.$set(this.listCacheData, current, oldList)
 				})
+			},
+			loadmore() {
+				// console.log('触发上拉')
+				this.page++
+				this.getList(this.activeIndex)
 			}
 		}
 	}

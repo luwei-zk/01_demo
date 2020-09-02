@@ -122,13 +122,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {};
 
 
-  } };exports.default = _default;
+  },
+  methods: {
+    loadMore: function loadMore() {
+      // console.log('触发上拉加载更多')
+      // 发送给 list-item
+      this.$emit('loadmore');
+    } } };exports.default = _default;
 
 /***/ }),
 
