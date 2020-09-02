@@ -61,6 +61,8 @@
   width: 100%;
 }
 .listcard .listcard-content .listcard-content_title.data-v-cb743578 {
+  padding-right: 30px;
+  position: relative;
   font-size: 14px;
   color: #333;
   font-weight: 400;

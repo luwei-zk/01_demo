@@ -76,7 +76,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  likes: function() {
+    return __webpack_require__.e(/*! import() | components/likes/likes */ "components/likes/likes").then(__webpack_require__.bind(null, /*! @/components/likes/likes.vue */ 104))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -181,14 +185,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
 var _default2 =
 {
   props: {
-    // 传递过来的item中，有mode字段，此处可以删掉不用了
-    // mode: {
-    //  type: String,
-    //  default: 'base'
-    // },
     item: {
       type: Object,
       default: function _default() {
@@ -200,7 +202,11 @@ var _default2 =
     return {};
 
 
-  } };exports.default = _default2;
+  },
+  methods: {
+    open: function open() {
+      console.log('打开详情页');
+    } } };exports.default = _default2;
 
 /***/ }),
 
