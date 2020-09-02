@@ -50,8 +50,11 @@
 				const {
 					current
 				} = e.detail
-				this.getList(current)
 				this.$emit('change', current)
+				// 修复重复请求的问题
+				if (!this.listCacheData[current] || this.listCacheData[current] === 0) {
+					this.getList(current)
+				}
 			},
 			// 获取选项卡内容
 			getList(current) {

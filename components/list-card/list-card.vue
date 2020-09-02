@@ -3,11 +3,11 @@
         <!-- 基础卡片 -->
         <view v-if="item.mode == 'base'" class="listcard">
             <view class="listcard-image">
-                <image :src="item.cover[0]" mode="aspectFill"></image>
+                <image class="listcard-image_img" :src="item.cover[0]" mode="aspectFill"></image>
             </view>
             <view class="listcard-content">
                 <view class="listcard-content_title">
-                    <text>{{item.title}}</text>
+                    <text class="listcard-content_title-text">{{item.title}}</text>
                 </view>
                 <view class="listcard-content_des">
                     <view class="listcard-content_des-label">
@@ -24,12 +24,12 @@
         <view v-if="item.mode == 'column'" class="listcard mode-column">
             <view class="listcard-content">
                 <view class="listcard-content_title">
-                    <text>{{item.title}}</text>
+                    <text class="listcard-content_title-text">{{item.title}}</text>
                 </view>
                 <view class="listcard-image">
                     <!-- v-if 图片有很多，只取前3张 -->
                     <view v-if="index < 3" v-for="(item,index) in item.cover" :key="index" class="listcard-image_item">
-                        <image :src="item" mode="aspectFill"></image>
+                        <image class="listcard-image_img" :src="item" mode="aspectFill"></image>
                     </view>
                 </view>
                 <view class="listcard-content_des">
@@ -46,11 +46,11 @@
         <!-- 大图模式 -->
         <view v-if="item.mode == 'image'" class="listcard mode-image">
             <view class="listcard-image">
-                <image :src="item.cover[0]" mode="aspectFill"></image>
+                <image class="listcard-image_img" :src="item.cover[0]" mode="aspectFill"></image>
             </view>
             <view class="listcard-content">
                 <view class="listcard-content_title">
-                    <text>{{item.title}}</text>
+                    <text class="listcard-content_title-text">{{item.title}}</text>
                 </view>
                 <view class="listcard-content_des">
                     <view class="listcard-content_des-label">
@@ -104,7 +104,7 @@
             border-radius: 5px;
             overflow: hidden;
 
-            image {
+            .listcard-image_img {
                 width: 100%;
                 height: 100%;
             }
@@ -124,7 +124,7 @@
                 line-height: 1.2;
 
                 // 实现两行显示 ...
-                text {
+                .listcard-content_title-text {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
@@ -179,7 +179,7 @@
                         margin-left: 0;
                     }
 
-                    image {
+                    .listcard-image_img {
                         width: 100%;
                         height: 100%;
                     }

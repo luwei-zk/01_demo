@@ -166,8 +166,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
       current =
       e.detail.current;
-      this.getList(current);
       this.$emit('change', current);
+      // 修复重复请求的问题
+      if (!this.listCacheData[current] || this.listCacheData[current] === 0) {
+        this.getList(current);
+      }
     },
     // 获取选项卡内容
     getList: function getList(current) {var _this = this;
