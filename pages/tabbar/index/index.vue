@@ -39,6 +39,10 @@
 					const {
 						data
 					} = res
+					// 给获取到的所有数据前面插入一个空对象
+					data.unshift({
+						name: '全部'
+					})
 					this.tabList = data
 				})
 			},

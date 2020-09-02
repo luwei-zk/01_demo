@@ -192,6 +192,10 @@ var _default =
 
         data =
         res.data;
+        // 给获取到的所有数据前面插入一个空对象
+        data.unshift({
+          name: '全部' });
+
         _this.tabList = data;
       });
     },
