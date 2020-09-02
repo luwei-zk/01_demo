@@ -114,10 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 88));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 88));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default2 =
 
 
 
@@ -131,11 +128,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   components: {
     listItem: listItem },
 
+  props: {
+    tab: {
+      type: Array,
+      default: function _default() {
+        return [];
+      } },
+
+    activeIndex: {
+      type: Number,
+      default: 0 } },
+
+
   data: function data() {
     return {};
 
 
-  } };exports.default = _default;
+  },
+  methods: {
+    // 选项卡自带滑动事件触发
+    change: function change(e) {var
+
+      current =
+      e.detail.current;
+      this.$emit('change', current);
+    } } };exports.default = _default2;
 
 /***/ }),
 

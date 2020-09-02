@@ -19,6 +19,18 @@
 				default () {
 					return []
 				}
+			},
+			tabIndex: {
+				type: Number,
+				default: 0
+			}
+		},
+		// 监听 data > pros 里值的变化
+		watch:{
+			// newVal,oldVal watch 自带
+			tabIndex(newVal,oldVal) {
+				// 此时，上下联动已经实现
+				this.activeIndex = newVal
 			}
 		},
 		data() {

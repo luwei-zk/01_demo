@@ -1,14 +1,15 @@
 <template>
 	<view class="home">
+		
 		<!-- 导航栏 -->
 		<navbar></navbar>
-		
+
 		<!-- 栏目导航 -->
-		<tab :list='tabList' @tab="tab"></tab>
-		
+		<tab :list='tabList' :tabIndex="tabIndex" @tab="tab"></tab>
+
 		<!-- 中部滚动视图 -->
 		<view class="home-list">
-			<list></list>
+			<list :tab='tabList' :activeIndex="activeIndex" @change="change"></list>
 		</view>
 		
 	</view>
@@ -18,7 +19,12 @@
 	export default {
 		data() {
 			return {
-				tabList: []
+				// 获取的选项卡内容
+				tabList: [],
+				// list 组件选项卡内容顺序，传递给 tab 下-上联动
+				tabIndex: 0,
+				// tab 组件传递给 list 组件，上-下联动
+				activeIndex: 0
 			}
 		},
 		onLoad() {
@@ -37,9 +43,17 @@
 				})
 			},
 			// 从 tab传递过来的数据
-			tab({ data,index }) {
+			tab({
+				data,
+				index
+			}) {
 				// 暂做保留
 				console.log(data, index);
+				this.activeIndex = index
+			},
+			change(current) {
+				// current 当前选项卡内容序号
+				this.tabIndex = current
 			}
 		}
 	}
@@ -57,6 +71,7 @@
 		flex: 1;
 		height: 100%;
 		box-sizing: border-box;
+
 		.home-list {
 			flex: 1;
 		}

@@ -1,9 +1,6 @@
 <template>
-	<swiper class="home-swiper">
-		<swiper-item class="swiper-item">
-			<list-item></list-item>
-		</swiper-item>
-		<swiper-item class="swiper-item">
+	<swiper class="home-swiper" :current="activeIndex" @change="change">
+		<swiper-item v-for="(item,index) in tab" :key="index" class="swiper-item">
 			<list-item></list-item>
 		</swiper-item>
 	</swiper>
@@ -12,13 +9,34 @@
 <script>
 	import listItem from './list-item.vue'
 	export default {
-		components:{
+		components: {
 			listItem
+		},
+		props: {
+			tab: {
+				type: Array,
+				default () {
+					return []
+				}
+			},
+			activeIndex: {
+				type: Number,
+				default: 0
+			}
 		},
 		data() {
 			return {
 
 			};
+		},
+		methods: {
+			// 选项卡自带滑动事件触发
+			change(e) {
+				const {
+					current
+				} = e.detail
+				this.$emit('change', current)
+			}
 		}
 	}
 </script>

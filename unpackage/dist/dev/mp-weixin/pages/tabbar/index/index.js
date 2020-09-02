@@ -167,11 +167,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
     return {
-      tabList: [] };
+      // 获取的选项卡内容
+      tabList: [],
+      // list 组件选项卡内容顺序，传递给 tab 下-上联动
+      tabIndex: 0,
+      // tab 组件传递给 list 组件，上-下联动
+      activeIndex: 0 };
 
   },
   onLoad: function onLoad() {
@@ -190,9 +196,17 @@ var _default =
       });
     },
     // 从 tab传递过来的数据
-    tab: function tab(_ref) {var data = _ref.data,index = _ref.index;
+    tab: function tab(_ref)
+
+
+    {var data = _ref.data,index = _ref.index;
       // 暂做保留
       console.log(data, index);
+      this.activeIndex = index;
+    },
+    change: function change(current) {
+      // current 当前选项卡内容序号
+      this.tabIndex = current;
     } } };exports.default = _default;
 
 /***/ }),
