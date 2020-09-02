@@ -112,11 +112,8 @@ var components = {
   tab: function() {
     return __webpack_require__.e(/*! import() | components/tab/tab */ "components/tab/tab").then(__webpack_require__.bind(null, /*! @/components/tab/tab.vue */ 44))
   },
-  listScroll: function() {
-    return __webpack_require__.e(/*! import() | components/list-scroll/list-scroll */ "components/list-scroll/list-scroll").then(__webpack_require__.bind(null, /*! @/components/list-scroll/list-scroll.vue */ 51))
-  },
-  listCard: function() {
-    return __webpack_require__.e(/*! import() | components/list-card/list-card */ "components/list-card/list-card").then(__webpack_require__.bind(null, /*! @/components/list-card/list-card.vue */ 58))
+  list: function() {
+    return __webpack_require__.e(/*! import() | components/list/list */ "components/list/list").then(__webpack_require__.bind(null, /*! @/components/list/list.vue */ 51))
   }
 }
 var render = function() {
@@ -155,8 +152,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
 //
 //
 //

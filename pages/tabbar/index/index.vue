@@ -6,12 +6,10 @@
 		<!-- 栏目导航 -->
 		<tab :list='tabList' @tab="tab"></tab>
 		
-		<list-scroll>
-			<!-- 卡片视图 -->
-			<list-card mode="base"></list-card>
-			<list-card mode="image"></list-card>
-			<list-card mode="column"></list-card>
-		</list-scroll>
+		<!-- 中部滚动视图 -->
+		<view class="home-list">
+			<list></list>
+		</view>
 		
 	</view>
 </template>
@@ -57,7 +55,10 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		border: 1px solid red;
 		height: 100%;
+		box-sizing: border-box;
+		.home-list {
+			flex: 1;
+		}
 	}
 </style>

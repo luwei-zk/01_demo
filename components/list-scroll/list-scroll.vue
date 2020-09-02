@@ -19,9 +19,9 @@
 <style lang="scss" scoped>
 	.scroll {
 		flex: 1;
+		height: 100%;
 		overflow: hidden;
 		box-sizing: border-box;
-
 		.list-scroll {
 			height: 100%;
 			display: flex;

@@ -41,7 +41,12 @@ page.data-v-6b1f4146 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
-  border: 1px solid red;
   height: 100%;
+  box-sizing: border-box;
+}
+.home .home-list.data-v-6b1f4146 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
 }
 
