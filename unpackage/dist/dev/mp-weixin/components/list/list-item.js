@@ -139,6 +139,14 @@ var _default2 =
       type: Array,
       default: function _default() {
         return [];
+      } },
+
+    load: {
+      type: Object,
+      default: function _default() {
+        return {
+          loading: "loading" };
+
       } } },
 
 

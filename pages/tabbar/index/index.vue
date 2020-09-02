@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-		
+
 		<!-- 导航栏 -->
 		<navbar></navbar>
 
@@ -11,7 +11,7 @@
 		<view class="home-list">
 			<list :tab='tabList' :activeIndex="activeIndex" @change="change"></list>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -58,6 +58,7 @@
 			change(current) {
 				// current 当前选项卡内容序号
 				this.tabIndex = current
+				this.activeIndex = current
 			}
 		}
 	}

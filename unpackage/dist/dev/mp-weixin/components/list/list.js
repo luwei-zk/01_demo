@@ -147,8 +147,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       // 云函数获取的数据缓存
       listCacheData: {},
       // 上拉加载更多
-      page: 1,
-      pageSize: 5 };
+      load: {}, //装载page 和 loading
+      pageSize: 10 };
 
   },
   watch: {
@@ -160,8 +160,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   // onload 是在页面中,created 是在组件中
   created: function created() {
-    // 默认获取后端开发
-    // this.getList(0)
+
   },
   methods: {
     // 选项卡自带滑动事件触发
@@ -177,14 +176,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     // 获取选项卡内容
     getList: function getList(current) {var _this = this;
+      // 初始化或者切换tab时，云函数获取第一页，显示loading状态
+      if (!this.load[current]) {
+        this.load[current] = {
+          page: 1,
+          loading: 'loading' };
+
+      }
       this.$api.get_list({
         name: this.tab[current].name,
-        page: this.page,
+        page: this.load[current].page,
         pageSize: this.pageSize }).
-      then(function (res) {var
-
+      then(function (res) {
+        // 每次获取最新的数据到 data 里
+        var
         data =
         res.data;
+        if (data.length === 0) {
+          var oldLoad = {};
+          // data 数据为空时，page 是不存在的
+          oldLoad.page = _this.load[current].page;
+          oldLoad.loading = 'noMore';
+          // 刷新对象
+          _this.$set(_this.load, current, oldLoad);
+          // 强制刷新页面
+          _this.$forceUpdate();
+          return;
+        }
         // 数组push数据,首次获取之前,listCacheData[current] 为空
         var oldList = _this.listCacheData[current] || [];
         oldList.push.apply(oldList, _toConsumableArray(data));
@@ -193,8 +211,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       });
     },
     loadmore: function loadmore() {
-      // console.log('触发上拉')
-      this.page++;
+      if (this.load[this.activeIndex].loading === 'noMore')
+      return;
+      this.load[this.activeIndex].page++;
       this.getList(this.activeIndex);
     } } };exports.default = _default2;
 

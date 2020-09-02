@@ -211,6 +211,7 @@ var _default =
     change: function change(current) {
       // current 当前选项卡内容序号
       this.tabIndex = current;
+      this.activeIndex = current;
     } } };exports.default = _default;
 
 /***/ }),

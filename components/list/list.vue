@@ -1,7 +1,7 @@
 <template>
 	<swiper class="home-swiper" :current="activeIndex" @change="change">
 		<swiper-item v-for="(item,index) in tab" :key="index" class="swiper-item">
-			<list-item :list='listCacheData[index]' @loadmore="loadmore"></list-item>
+			<list-item :list='listCacheData[index]' :load="load[index]" @loadmore="loadmore"></list-item>
 		</swiper-item>
 	</swiper>
 </template>
@@ -31,8 +31,8 @@
 				// 云函数获取的数据缓存
 				listCacheData: {},
 				// 上拉加载更多
-				page: 1,
-				pageSize: 5
+				load: {},//装载page 和 loading
+				pageSize: 10
 			};
 		},
 		watch: {
@@ -44,8 +44,7 @@
 		},
 		// onload 是在页面中,created 是在组件中
 		created() {
-			// 默认获取后端开发
-			// this.getList(0)
+			
 		},
 		methods: {
 			// 选项卡自带滑动事件触发
@@ -61,14 +60,33 @@
 			},
 			// 获取选项卡内容
 			getList(current) {
+				// 初始化或者切换tab时，云函数获取第一页，显示loading状态
+				if (!this.load[current]) {
+					this.load[current] = {
+						page: 1,
+						loading: 'loading'
+					}
+				}
 				this.$api.get_list({
 					name: this.tab[current].name,
-					page: this.page,
+					page: this.load[current].page,
 					pageSize: this.pageSize
 				}).then(res => {
+					// 每次获取最新的数据到 data 里
 					const {
 						data
 					} = res
+					if (data.length === 0) {
+						let oldLoad = {}
+						// data 数据为空时，page 是不存在的
+						oldLoad.page = this.load[current].page
+						oldLoad.loading = 'noMore'
+						// 刷新对象
+						this.$set(this.load,current,oldLoad)
+						// 强制刷新页面
+						this.$forceUpdate()
+						return
+					}
 					// 数组push数据,首次获取之前,listCacheData[current] 为空
 					let oldList = this.listCacheData[current] || []
 					oldList.push(...data)
@@ -77,8 +95,9 @@
 				})
 			},
 			loadmore() {
-				// console.log('触发上拉')
-				this.page++
+				if (this.load[this.activeIndex].loading === 'noMore')
+				return
+				this.load[this.activeIndex].page++
 				this.getList(this.activeIndex)
 			}
 		}
