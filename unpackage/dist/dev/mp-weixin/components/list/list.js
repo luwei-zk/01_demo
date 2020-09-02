@@ -142,26 +142,43 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
-      list: [] };
+      // 云函数获取的数据
+      list: [],
+      // 云函数获取的数据缓存
+      listCacheData: {} };
 
   },
+  watch: {
+    tab: function tab(newVal) {
+      if (newVal.length === 0)
+      return;
+      this.getList(this.activeIndex);
+    } },
+
   // onload 是在页面中,created 是在组件中
   created: function created() {
     // 默认获取后端开发
-    this.getList('后端开发');
+    // this.getList(0)
   },
   methods: {
     // 选项卡自带滑动事件触发
     change: function change(e) {var
-      current = e.detail.current;
-      this.getList(this.tab[current].name);
+
+      current =
+      e.detail.current;
+      this.getList(current);
       this.$emit('change', current);
     },
     // 获取选项卡内容
-    getList: function getList(name) {var _this = this;
-      this.$api.get_list({ name: name }).then(function (res) {var
-        data = res.data;
-        _this.list = data;
+    getList: function getList(current) {var _this = this;
+      this.$api.get_list({
+        name: this.tab[current].name }).
+      then(function (res) {var
+
+        data =
+        res.data;
+        // 懒加载数据
+        _this.$set(_this.listCacheData, current, data);
       });
     } } };exports.default = _default2;
 
