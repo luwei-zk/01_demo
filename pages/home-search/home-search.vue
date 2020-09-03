@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-		<navbar :isSearch="true"></navbar>
+		<navbar :isSearch="true" @input="change"></navbar>
 		<view class="home-list">
 			<view class="label-box">
 				<!-- 第一行 -->
@@ -9,10 +9,13 @@
 					<text class="label-clear">清空</text>
 				</view>
 				<!-- 搜索历史 -->
-				<view class="label-content">
+				<view v-if="historyList.length > 0" class="label-content">
 					<view class="label-content_item" v-for="item in 10">
 						{{item}} 内容
 					</view>
+				</view>
+				<view class="no-data">
+					没有历史记录
 				</view>
 			</view>
 		</view>
@@ -23,11 +26,17 @@
 	export default {
 		data() {
 			return {
-				
+				historyList: [],
+				value:'',
+				is_histroy: true,
+				searchList: [],
+				loading:false
 			}
 		},
 		methods: {
-			
+			change(value) {
+				console.log('传入的value是:',value)
+			}
 		}
 	}
 </script>

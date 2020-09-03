@@ -22,7 +22,7 @@
 				</view>
 				<!-- 搜索页显示 -->
 				<view v-else class="navbar-search">
-					<input class="navbar-search_text" type="text" value="" placeholder="请输入您要搜索的内容" />
+					<input class="navbar-search_text" type="text" v-model="val" placeholder="请输入您要搜索的内容" @input="inputChange" />
 				</view>
 			</view>
 		</view>
@@ -44,7 +44,8 @@
 			return {
 				statusBarHeight: 20,
 				navBarHeight: 45,
-				windowWidth: 375
+				windowWidth: 375,
+				val: ''
 			};
 		},
 		created() {
@@ -63,12 +64,20 @@
 			// #endif
 		},
 		methods: {
+			// 打开搜索页事件
 			open() {
 				// 阻止冒泡的同时,如果时搜索页点击,则返回
 				if (this.isSearch) return
 				uni.navigateTo({
 					url: '/pages/home-search/home-search'
 				})
+			},
+			// 搜索框事件
+			inputChange(e) {
+				const {
+					value
+				} = e.detail
+				this.$emit('input', value)
 			}
 		}
 	}

@@ -164,7 +164,8 @@ var _default =
     return {
       statusBarHeight: 20,
       navBarHeight: 45,
-      windowWidth: 375 };
+      windowWidth: 375,
+      val: '' };
 
   },
   created: function created() {
@@ -183,12 +184,20 @@ var _default =
 
   },
   methods: {
+    // 打开搜索页事件
     open: function open() {
       // 阻止冒泡的同时,如果时搜索页点击,则返回
       if (this.isSearch) return;
       uni.navigateTo({
         url: '/pages/home-search/home-search' });
 
+    },
+    // 搜索框事件
+    inputChange: function inputChange(e) {var
+
+      value =
+      e.detail.value;
+      this.$emit('input', value);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
