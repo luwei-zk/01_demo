@@ -9,33 +9,43 @@
 					<text class="label-clear">清空</text>
 				</view>
 				<!-- 搜索历史 -->
-				<view v-if="historyList.length > 0" class="label-content">
-					<view class="label-content_item" v-for="item in 10">
-						{{item}} 内容
+				<view v-if="historyLists.length > 0" class="label-content">
+					<view class="label-content_item" v-for="item in historyLists">
+						{{item.name}}
 					</view>
 				</view>
-				<view class="no-data">
+				<view v-else class="no-data">
 					没有历史记录
 				</view>
 			</view>
+			<button type="default" @click="testBtn">添加历史记录</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex'
 	export default {
 		data() {
 			return {
-				historyList: [],
-				value:'',
-				is_histroy: true,
-				searchList: [],
-				loading:false
+				// historyList: [], computed 里声明了
 			}
 		},
+		computed: {
+			// 实时接收状态的变化
+			...mapState(['historyLists'])
+		},
 		methods: {
+			// 从首页搜索框传递过来
 			change(value) {
-				console.log('传入的value是:',value)
+				console.log('传入的value是:', value)
+			},
+			testBtn() {
+				this.$store.dispatch('set_history', {
+					name: 'test'
+				})
 			}
 		}
 	}
@@ -52,6 +62,7 @@
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+
 		.label-box {
 			background-color: #fff;
 			margin-bottom: 10px;
