@@ -11,7 +11,6 @@
 		<view class="home-list">
 			<list :tab='tabList' :activeIndex="activeIndex" @change="change"></list>
 		</view>
-
 	</view>
 </template>
 

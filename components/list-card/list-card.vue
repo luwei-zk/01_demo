@@ -8,7 +8,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content_title">
 					<text class="listcard-content_title-text">{{item.title}}</text>
-					<likes></likes>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-content_des">
 					<view class="listcard-content_des-label">
@@ -26,7 +26,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content_title">
 					<text class="listcard-content_title-text">{{item.title}}</text>
-					<likes></likes>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-image">
 					<!-- v-if 图片有很多，只取前3张 -->
@@ -53,7 +53,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content_title">
 					<text class="listcard-content_title-text">{{item.title}}</text>
-					<likes></likes>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-content_des">
 					<view class="listcard-content_des-label">
