@@ -1,7 +1,9 @@
 'use strict';
 const db = uniCloud.database()
+const $ = db.command.aggregate
 exports.main = async (event, context) => {
 	const {
+		user_id,//新传入，获取当前用户
 		name,
 		page = 1,
 		pageSize = 10
@@ -13,8 +15,17 @@ exports.main = async (event, context) => {
 			classify: name
 		}
 	}
+	// 获取用户表
+	const userinfo = await db.collection('user').doc(user_id).get()
+	// 获取用户表字段
+	const article_likes_ids = userinfo.data[0].article_likes_ids
+	// 获取文章列表
 	const list = await db.collection('article')
 		.aggregate()
+		.addFields({
+			// 添加一个新字段
+			is_like: $.in(['$_id',article_likes_ids])
+		})
 		.match(matchObj)
 		.project({
 			content: 0

@@ -12,6 +12,10 @@
 				default () {
 					return {}
 				}
+			},
+			types: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -19,32 +23,48 @@
 				like: false
 			};
 		},
+		watch: {
+			item(newVal) {
+				this.like = this.item.is_like
+			}
+		},
+		created() {
+			this.like = this.item.is_like
+		},
 		methods: {
 			likeTap() {
+				this.like = !this.like
 				this.setUpdateLikes()
-				console.log('收藏成功')
 			},
 			setUpdateLikes() {
+				uni.showLoading()
 				this.$api.update_like({
 					user_id: '5f45afe33c788800019dfb0b',
 					article_id: this.item._id
 				}).then(res => {
-					console.log(res)
+					uni.hideLoading()
+					uni.showToast({
+						title: this.like ? '收藏成功' : '取消收藏',
+						icon: 'none'
+					})
+
+				}).catch(() => { //请求错误时关闭
+					uni.hideLoading()
 				})
 			}
 		}
 	}
 </script>
 
-<style lang="scss" scoped>
+<style>
 	.icons {
+		position: absolute;
+		right: 0;
+		top: 0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		width: 20px;
 		height: 20px;
-		position: absolute;
-		right: 0;
-		top: 0;
 	}
 </style>
