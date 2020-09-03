@@ -11,10 +11,12 @@
 				</view>
 				<!-- 搜索历史 -->
 				<view v-if="historyLists.length > 0" class="label-content">
-					<view class="label-content_item" v-for="item in historyLists">
-						{{item.name}}
+					<view class="label-content_item" v-for="(item,index) in  historyLists"  :key="index">
+					{{item.name}}
 					</view>
 				</view>
+				
+				
 				<view v-else class="no-data">
 					没有历史记录
 				</view>
@@ -35,7 +37,7 @@
 		data() {
 			return {
 				// 显示搜索历史还是搜索结果
-				is_history: false,
+				is_history: true,
 				searchList: []
 			}
 		},
@@ -48,6 +50,14 @@
 			// 从首页搜索框传递过来
 			change(value) {
 				console.log('请求的数据是:',value)
+				
+				if (!value) {
+					clearTimeout(this.timer)
+					this.mark = false
+					this.getSearch(value)
+					return
+				}
+				
 				// 做标记，实现一秒请求一次
 				if (!this.mark) {
 					this.mark = true
@@ -63,6 +73,13 @@
 			// 	})
 			// }
 			getSearch(value) {
+				// 搜索内容为空
+				if (!value) {
+					this.searchList = []
+					this.is_history = true
+					return
+				}
+				this.is_history = false
 				this.$api.get_search({
 					value,
 				}).then(res => {

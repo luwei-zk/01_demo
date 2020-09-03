@@ -170,6 +170,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
 var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 
 
@@ -177,7 +179,7 @@ var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumera
   data: function data() {
     return {
       // 显示搜索历史还是搜索结果
-      is_history: false,
+      is_history: true,
       searchList: [] };
 
   },
@@ -190,6 +192,14 @@ var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumera
     // 从首页搜索框传递过来
     change: function change(value) {var _this = this;
       console.log('请求的数据是:', value);
+
+      if (!value) {
+        clearTimeout(this.timer);
+        this.mark = false;
+        this.getSearch(value);
+        return;
+      }
+
       // 做标记，实现一秒请求一次
       if (!this.mark) {
         this.mark = true;
@@ -205,6 +215,13 @@ var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumera
     // 	})
     // }
     getSearch: function getSearch(value) {var _this2 = this;
+      // 搜索内容为空
+      if (!value) {
+        this.searchList = [];
+        this.is_history = true;
+        return;
+      }
+      this.is_history = false;
       this.$api.get_search({
         value: value }).
       then(function (res) {
