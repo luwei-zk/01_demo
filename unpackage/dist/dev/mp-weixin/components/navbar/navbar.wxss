@@ -63,7 +63,8 @@
   margin-right: 10px;
 }
 .navbar-fixed .navbar-content .navbar-search .navbar-search_text.data-v-3f9c1e44 {
-  font-size: 12px;
+  width: 100%;
+  font-size: 14px;
   color: #999;
 }
 .navbar-fixed .navbar-content.search.data-v-3f9c1e44 {

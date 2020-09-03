@@ -49,20 +49,28 @@
 		methods: {
 			// 从首页搜索框传递过来
 			change(value) {
-				console.log('传入的value是:', value)
+				// console.log('传入的value是:', value)
+				// this.getList(value)
+				// 做标记，实现一秒请求一次
+				if (!this.mark) {
+					this.mark = true
+					this.timer = setTimeout(() => {
+						this.mark = false
+						this.getList(value)
+					}, 1000)
+				}
 			},
 			// testBtn() {
 			// 	this.$store.dispatch('set_history', {
 			// 		name: 'test'
 			// 	})
 			// }
-			getList(current) {
+			getList(value) {
 				this.$api.get_list({
 					name: '全部',
-					page: 1,
-					pageSize: 20
 				}).then(res => {
 					// 每次获取新的数据到 data 里
+					console.log(res)
 					const {
 						data
 					} = res

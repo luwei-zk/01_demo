@@ -117,7 +117,8 @@
 				}
 
 				.navbar-search_text {
-					font-size: 12px;
+					width: 100%;
+					font-size: 14px;
 					color: #999;
 				}
 			}
