@@ -6,13 +6,23 @@
 			<!-- 状态栏 不同设备高度不一样，动态获取 -->
 			<view :style="{height: statusBarHeight + 'px'}"></view>
 			<!-- 自定义导航栏 -->
-			<view class="navbar-content" :style="{height:navBarHeight + 'px',width: windowWidth + 'px'}">
+			<view class="navbar-content" :class="{search:isSearch}" :style="{height:navBarHeight + 'px',width: windowWidth + 'px'}"
+			 @click.stop="open">
+				<!-- 搜索页返回键 -->
+				<view v-if="isSearch" class="navbar-content_search-icons">
+					<uni-icons type="back" size="22" color="#fff"></uni-icons>
+				</view>
 				<!-- 搜索框 -->
-				<view class="navbar-search">
+				<!-- 首页显示 -->
+				<view v-if="!isSearch" class="navbar-search">
 					<view class="navbar-search_icon">
 						<uni-icons type="search" size="16" color="#999"></uni-icons>
 					</view>
 					<view class="navbar-search_text">uni-app、vue、html</view>
+				</view>
+				<!-- 搜索页显示 -->
+				<view v-else class="navbar-search">
+					<input class="navbar-search_text" type="text" value="" placeholder="请输入您要搜索的内容" />
 				</view>
 			</view>
 		</view>
@@ -23,6 +33,13 @@
 
 <script>
 	export default {
+		props: {
+			// 判断时首页调用 navbar 还是 搜索页
+			isSearch: {
+				type: Boolean,
+				default: false
+			}
+		},
 		data() {
 			return {
 				statusBarHeight: 20,
@@ -44,6 +61,15 @@
 			this.navBarHeight = (menuButtonInfo.bottom - info.statusBarHeight) + (menuButtonInfo.top - info.statusBarHeight)
 			this.windowWidth = menuButtonInfo.left
 			// #endif
+		},
+		methods: {
+			open() {
+				// 阻止冒泡的同时,如果时搜索页点击,则返回
+				if (this.isSearch) return
+				uni.navigateTo({
+					url: '/pages/home-search/home-search'
+				})
+			}
 		}
 	}
 </script>
@@ -84,6 +110,19 @@
 				.navbar-search_text {
 					font-size: 12px;
 					color: #999;
+				}
+			}
+
+			&.search {
+				padding-left: 0;
+
+				.navbar-content_search_icons {
+					margin-left: 10px;
+					margin-right: 10px;
+				}
+
+				.navbar-search {
+					border-radius: 5px;
 				}
 			}
 		}
