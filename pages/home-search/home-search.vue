@@ -2,7 +2,8 @@
 	<view class="home">
 		<navbar :isSearch="true" @input="change"></navbar>
 		<view class="home-list">
-			<view class="label-box">
+			<!-- 是显示搜索结果还是搜索历史 -->
+			<view v-if="is_history" class="label-box">
 				<!-- 第一行 -->
 				<view class="label-header">
 					<text class="label-title">搜索历史</text>
@@ -18,7 +19,10 @@
 					没有历史记录
 				</view>
 			</view>
-			<button type="default" @click="testBtn">添加历史记录</button>
+			<!-- 显示搜索结果 -->
+			<list-scroll v-else class="list-scroll">
+				<list-card :item="item" v-for="item in searchList" :key="item._id"></list-card>
+			</list-scroll>
 		</view>
 	</view>
 </template>
@@ -30,21 +34,39 @@
 	export default {
 		data() {
 			return {
-				// historyList: [], computed 里声明了
+				// 显示搜索历史还是搜索结果
+				is_history: false,
+				searchList: []
 			}
 		},
 		computed: {
 			// 实时接收状态的变化
 			...mapState(['historyLists'])
 		},
+		onLoad() {
+			this.getList()
+		},
 		methods: {
 			// 从首页搜索框传递过来
 			change(value) {
 				console.log('传入的value是:', value)
 			},
-			testBtn() {
-				this.$store.dispatch('set_history', {
-					name: 'test'
+			// testBtn() {
+			// 	this.$store.dispatch('set_history', {
+			// 		name: 'test'
+			// 	})
+			// }
+			getList(current) {
+				this.$api.get_list({
+					name: '全部',
+					page: 1,
+					pageSize: 20
+				}).then(res => {
+					// 每次获取新的数据到 data 里
+					const {
+						data
+					} = res
+					this.searchList = data
 				})
 			}
 		}
