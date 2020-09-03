@@ -185,20 +185,17 @@ var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumera
 
   (0, _vuex.mapState)(['historyLists'])),
 
-  onLoad: function onLoad() {
-    this.getList();
-  },
+  onLoad: function onLoad() {},
   methods: {
     // 从首页搜索框传递过来
     change: function change(value) {var _this = this;
-      // console.log('传入的value是:', value)
-      // this.getList(value)
+      console.log('请求的数据是:', value);
       // 做标记，实现一秒请求一次
       if (!this.mark) {
         this.mark = true;
         this.timer = setTimeout(function () {
           _this.mark = false;
-          _this.getList(value);
+          _this.getSearch(value);
         }, 1000);
       }
     },
@@ -207,15 +204,15 @@ var _vuex = __webpack_require__(/*! vuex */ 18);function ownKeys(object, enumera
     // 		name: 'test'
     // 	})
     // }
-    getList: function getList(value) {var _this2 = this;
-      this.$api.get_list({
-        name: '全部' }).
+    getSearch: function getSearch(value) {var _this2 = this;
+      this.$api.get_search({
+        value: value }).
       then(function (res) {
         // 每次获取新的数据到 data 里
-        console.log(res);var
-
+        var
         data =
         res.data;
+        console.log(res);
         _this2.searchList = data;
       });
     } } };exports.default = _default;

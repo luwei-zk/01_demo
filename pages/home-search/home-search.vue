@@ -43,20 +43,17 @@
 			// 实时接收状态的变化
 			...mapState(['historyLists'])
 		},
-		onLoad() {
-			this.getList()
-		},
+		onLoad() {},
 		methods: {
 			// 从首页搜索框传递过来
 			change(value) {
-				// console.log('传入的value是:', value)
-				// this.getList(value)
+				console.log('请求的数据是:',value)
 				// 做标记，实现一秒请求一次
 				if (!this.mark) {
 					this.mark = true
 					this.timer = setTimeout(() => {
 						this.mark = false
-						this.getList(value)
+						this.getSearch(value)
 					}, 1000)
 				}
 			},
@@ -65,15 +62,15 @@
 			// 		name: 'test'
 			// 	})
 			// }
-			getList(value) {
-				this.$api.get_list({
-					name: '全部',
+			getSearch(value) {
+				this.$api.get_search({
+					value,
 				}).then(res => {
 					// 每次获取新的数据到 data 里
-					console.log(res)
 					const {
 						data
 					} = res
+					console.log(res)
 					this.searchList = data
 				})
 			}
