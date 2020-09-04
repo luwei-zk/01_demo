@@ -34,6 +34,11 @@
 <script>
 	export default {
 		props: {
+			// 搜索页输入的值
+			value: {
+				type: [String, Number],
+				default: ''
+			},
 			// 判断时首页调用 navbar 还是 搜索页
 			isSearch: {
 				type: Boolean,
@@ -47,6 +52,12 @@
 				windowWidth: 375,
 				val: ''
 			};
+		},
+		watch: {
+			// 监控搜索页关键字与首页搜索关键字的双向绑定
+			value(newVal) {
+				this.val = newVal
+			}
 		},
 		created() {
 			// 获取手机系统信息

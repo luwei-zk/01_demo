@@ -1,6 +1,6 @@
 <template>
 	<view class="home">
-		<navbar :isSearch="true" @input="change"></navbar>
+		<navbar :isSearch="true" @input="change" v-model="value"></navbar>
 		<view class="home-list">
 			<!-- 是显示搜索结果还是搜索历史 -->
 			<view v-if="is_history" class="label-box">
@@ -11,19 +11,24 @@
 				</view>
 				<!-- 搜索历史 -->
 				<view v-if="historyLists.length > 0" class="label-content">
-					<view class="label-content_item" v-for="(item,index) in  historyLists"  :key="index">
-					{{item.name}}
+					<view class="label-content_item" v-for="(item,index) in  historyLists" :key="index" @click="openHistory(item)">
+						{{item.name}}
 					</view>
 				</view>
-				
-				
 				<view v-else class="no-data">
 					没有历史记录
 				</view>
 			</view>
 			<!-- 显示搜索结果 -->
 			<list-scroll v-else class="list-scroll">
-				<list-card :item="item" v-for="item in searchList" :key="item._id" @click="setHistory"></list-card>
+				<!-- 正在搜索 -->
+				<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
+				<!-- 有搜搜结果时 -->
+				<view v-if="searchList.length > 0">
+					<list-card :item="item" v-for="item in searchList" :key="item._id" @click="setHistory"></list-card>
+				</view>
+				<!-- 搜索内容为空时 -->
+				<view v-if="searchList === 0 || !loading" class="no-data">没有搜索到相关数据</view>
 			</list-scroll>
 		</view>
 	</view>
@@ -41,7 +46,9 @@
 				// 从数据库获取的数据
 				searchList: [],
 				// 搜索输入的关键字
-				value: ''
+				value: '',
+				// 显示正在搜索
+				loading: false
 			}
 		},
 		computed: {
@@ -53,13 +60,18 @@
 			//点击给 historyLists 添加值
 			setHistory() {
 				// 将 value 传递给 vuex
-				this.$store.dispatch('set_history',{
+				this.$store.dispatch('set_history', {
 					name: this.value
 				})
 			},
+			// 搜索历史点击事件
+			openHistory(item) {
+				this.value = item.name
+				this.getSearch(this.value)
+			},
 			// 从首页搜索框传递过来
 			change(value) {
-				this.value = value
+				// this.value = value
 				// 搜索内容为空
 				if (!value) {
 					clearTimeout(this.timer)
@@ -67,7 +79,7 @@
 					this.getSearch(value)
 					return
 				}
-				
+
 				// 做标记，实现一秒请求一次
 				if (!this.mark) {
 					this.mark = true
@@ -91,6 +103,8 @@
 					return
 				}
 				this.is_history = false
+				// 请求时，设置提示
+				this.loading = true
 				this.$api.get_search({
 					value,
 				}).then(res => {
@@ -99,7 +113,12 @@
 						data
 					} = res
 					console.log(res)
+					// 请求到数据 关闭提示
+					this.loading = false
 					this.searchList = data
+				}).catch(()=>{
+					// 请求失败也关闭提示
+					this.loading = false
 				})
 			}
 		}
