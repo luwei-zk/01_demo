@@ -23,12 +23,12 @@
 			<list-scroll v-else class="list-scroll">
 				<!-- 正在搜索 -->
 				<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
-				<!-- 有搜搜结果时 -->
+				<!-- 有搜索结果时 -->
 				<view v-if="searchList.length > 0">
 					<list-card :item="item" v-for="item in searchList" :key="item._id" @click="setHistory"></list-card>
 				</view>
 				<!-- 搜索内容为空时 -->
-				<view v-if="searchList === 0 || !loading" class="no-data">没有搜索到相关数据</view>
+				<view v-if="searchList.length === 0 && !loading" class="no-data">没有搜索到相关数据</view>
 			</list-scroll>
 		</view>
 	</view>
@@ -122,7 +122,7 @@
 					// 请求到数据 关闭提示
 					this.loading = false
 					this.searchList = data
-				}).catch(()=>{
+				}).catch(() => {
 					// 请求失败也关闭提示
 					this.loading = false
 				})

@@ -17,6 +17,8 @@ const store = new Vuex.Store({
 	mutations: {
 		// 添加历史记录
 		SET_HISTORY_LISTS(state, history) {
+			// 把所有的历史记录都添加上来了，不是一条
+			// history [ {name:'前端'},{name:'前端'} ]
 			state.historyLists = history
 		},
 		// 清空历史记录
@@ -28,7 +30,15 @@ const store = new Vuex.Store({
 		// 添加历史记录 history 从客户端传进来的
 		// 页面调用 此方法，该方法的commit调用SET_HISTORY_LISTS修改historyLists
 		set_history({commit,state}, history) {
+			// history: {name: '前端'} 只是一条
+			// list: [ {name:'前端'},{name:'前端'} ]
 			let list = state.historyLists
+			// 自己添加 去重
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].name === history.name) {
+					return
+				}
+			}
 			// 数组前面插入值
 			list.unshift(history)
 			// 将最新的 list 设置为缓存
