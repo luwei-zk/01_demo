@@ -4,12 +4,12 @@
 		<view class="label-box">
 			<view class="label-header">
 				<view class="label-title">我的标签</view>
-				<view class="label-edit">编辑</view>
+				<view class="label-edit" @click="editLabel">{{is_edit?'完成':'编辑'}}</view>
 			</view>
 			<view class="label-content">
-				<view class="label-content_item" v-for="(item,index) in 10" :key="index">
-					{{item}}标签
-					<uni-icons class="icons-close" type="clear" size="20" color="red"></uni-icons>
+				<view class="label-content_item" v-for="(item,index) in labelList" :key="item._id">
+					{{item.name}}
+					<uni-icons class="icons-close" v-if="is_edit" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -19,7 +19,7 @@
 				<view class="label-title">标签推荐</view>
 			</view>
 			<view class="label-content">
-				<view class="label-content_item" v-for="(item,index) in 10" :key="index">{{item}}标签</view>
+				<view class="label-content_item" v-for="(item,index) in list" :key="item._id" @click="add(index)">{{item.name}}</view>
 			</view>
 		</view>
 	</view>
@@ -29,14 +29,52 @@
 	export default {
 		data() {
 			return {
-
+				is_edit: false,
+				// 收藏的标签
+				labelList: [],
+				// 未收藏的标签
+				list: []
 			}
 		},
 		onLoad() {
-
+			this.getLabel()
 		},
 		methods: {
-
+			// 编辑 标签点击事件
+			editLabel() {
+				// this.is_edit = !this.is_edit
+				// true 正在编辑
+				if (this.is_edit) {
+					this.is_edit = false
+				} else {
+					this.is_edit = true
+				}
+			},
+			// 标签上移
+			add(index) {
+				if (!this.is_edit) return
+				this.labelList.push(this.list[index])
+				this.list.splice(index, 1)
+			},
+			// 标签下移
+			del(index) {
+				this.list.push(this.labelList[index])
+				this.labelList.splice(index, 1)
+			},
+			// 调用云函数获取标签
+			getLabel() {
+				this.$api.get_label({
+					type: "all"
+				}).then((res) => {
+					const {
+						data
+					} = res
+					// 只取 current: true 的数据
+					this.labelList = data.filter(item => item.current)
+					// 只取 current: false 的数据
+					this.list = data.filter(item => !item.current)
+				})
+			}
 		}
 	}
 </script>
