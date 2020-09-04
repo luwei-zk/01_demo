@@ -112,7 +112,7 @@
   -webkit-animation: loading-ios-H5-data-v-5f6e5104 1s 0s step-end infinite;
           animation: loading-ios-H5-data-v-5f6e5104 1s 0s step-end infinite;
 }
-.uni-load-more__img--ios-H5 > image.data-v-5f6e5104 {
+.uni-load-more__img--ios-H5-img.data-v-5f6e5104 {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -236,7 +236,9 @@
   -webkit-animation: loading-ios 1s 0s ease infinite;
           animation: loading-ios 1s 0s ease infinite;
 }
-.uni-load-more__img--android-MP > view.data-v-5f6e5104 {
+.uni-load-more__img--android-MP-v1.data-v-5f6e5104,
+.uni-load-more__img--android-MP-v2.data-v-5f6e5104,
+.uni-load-more__img--android-MP-v3.data-v-5f6e5104 {
   position: absolute;
   box-sizing: border-box;
   width: 100%;
@@ -247,15 +249,15 @@
   -webkit-transform-origin: center;
           transform-origin: center;
 }
-.uni-load-more__img--android-MP > view.data-v-5f6e5104:nth-child(1) {
+.uni-load-more__img--android-MP-v1.data-v-5f6e5104 {
   -webkit-animation: loading-android-MP-1-data-v-5f6e5104 1s 0s linear infinite;
           animation: loading-android-MP-1-data-v-5f6e5104 1s 0s linear infinite;
 }
-.uni-load-more__img--android-MP > view.data-v-5f6e5104:nth-child(2) {
+.uni-load-more__img--android-MP-v2.data-v-5f6e5104 {
   -webkit-animation: loading-android-MP-2-data-v-5f6e5104 1s 0s linear infinite;
           animation: loading-android-MP-2-data-v-5f6e5104 1s 0s linear infinite;
 }
-.uni-load-more__img--android-MP > view.data-v-5f6e5104:nth-child(3) {
+.uni-load-more__img--android-MP-v3.data-v-5f6e5104 {
   -webkit-animation: loading-android-MP-3-data-v-5f6e5104 1s 0s linear infinite;
           animation: loading-android-MP-3-data-v-5f6e5104 1s 0s linear infinite;
 }

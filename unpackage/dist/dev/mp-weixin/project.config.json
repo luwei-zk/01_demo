@@ -31,7 +31,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "",
+	"libVersion": "2.12.2",
 	"appid": "wxec768ab5bd367831",
 	"projectname": "zk-cloud",
 	"simulatorType": "wechat",
