@@ -29,7 +29,12 @@
 		onLoad() {
 			// 监听 标签页 自定义事件
 			uni.$on('labelChange', (res) => {
-				console.log('index首页监听到了 标签页数据:', res)
+				// 解决 key 重复的问题
+				this.tabList = []
+				this.tabIndex = 0
+				this.activeIndex = 0
+				// 重新发送事件
+				this.getLabel()
 			})
 
 			// 获取选项卡内容
@@ -50,10 +55,7 @@
 				})
 			},
 			// 从 tab传递过来的数据
-			tab({
-				data,
-				index
-			}) {
+			tab({data,index}) {
 				// 暂做保留
 				console.log(data, index);
 				this.activeIndex = index

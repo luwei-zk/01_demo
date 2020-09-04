@@ -1,36 +1,37 @@
 <template>
-	<view class="label">
-		<!-- 标签管理 -->
-		<view class="label-box">
-			<view class="label-header">
-				<view class="label-title">我的标签</view>
-				<view class="label-edit" @click="editLabel">{{is_edit?'完成':'编辑'}}</view>
-			</view>
-			<!-- 提示标签正在获取中 -->
-			<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
-			<!-- 获取完成时提示 -->
-			<view v-if="!loading" class="label-content">
-				<view class="label-content_item" v-for="(item,index) in labelList" :key="item._id">
-					{{item.name}}
-					<uni-icons class="icons-close" v-if="is_edit" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
+	<view class="page-home">
+		<view class="label">
+			<!-- 标签管理 -->
+			<view class="label-box">
+				<view class="label-header">
+					<view class="label-title">我的标签</view>
+					<view class="label-edit" @click="editLabel">{{is_edit?'完成':'编辑'}}</view>
+				</view>
+				<!-- 提示标签正在获取中 -->
+				<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
+				<!-- 获取完成时提示 -->
+				<view v-if="!loading" class="label-content">
+					<view class="label-content_item" v-for="(item,index) in labelList" :key="item._id">
+						{{item.name}}
+						<uni-icons class="icons-close" v-if="is_edit" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
+					</view>
+				</view>
+				<view v-if="labelList.length === 0 && !loading" class="no-data">
+					当前没有数据
 				</view>
 			</view>
-			<view v-if="labelList.length === 0 && !loading" class="no-data">
-				当前没有数据
-			</view>
-			<button type="default" @click="emit">发送事件</button>
-		</view>
-		<!-- 标签推荐 -->
-		<view class="label-box">
-			<view class="label-header">
-				<view class="label-title">标签推荐</view>
-			</view>
-			<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
-			<view v-if="!loading" class="label-content">
-				<view class="label-content_item" v-for="(item,index) in list" :key="item._id" @click="add(index)">{{item.name}}</view>
-			</view>
-			<view v-if="list.length === 0 && !loading" class="no-data">
-				当前没有数据
+			<!-- 标签推荐 -->
+			<view class="label-box">
+				<view class="label-header">
+					<view class="label-title">标签推荐</view>
+				</view>
+				<uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
+				<view v-if="!loading" class="label-content">
+					<view class="label-content_item" v-for="(item,index) in list" :key="item._id" @click="add(index)">{{item.name}}</view>
+				</view>
+				<view v-if="list.length === 0 && !loading" class="no-data">
+					当前没有数据
+				</view>
 			</view>
 		</view>
 	</view>
@@ -53,13 +54,6 @@
 			this.getLabel()
 		},
 		methods: {
-			// 测试自定义事件 
-			// 编辑完成标签后,刷新首页标签
-			emit() {
-				// 第二个参数可以自选
-				uni.$emit('labelChange', 'uni-app')
-			},
-
 			// 编辑 标签点击事件
 			editLabel() {
 				// this.is_edit = !this.is_edit
@@ -99,6 +93,8 @@
 						title: '更新成功',
 						icon: 'none'
 					})
+					// 更新成功后,发送给首页,更新标签
+					uni.$emit('labelChange')
 				})
 			},
 			// 调用云函数获取标签
@@ -122,8 +118,9 @@
 </script>
 
 <style lang="scss" scoped>
-	page {
+	.page-home {
 		background-color: #f5f5f5;
+		height: 100%;
 	}
 
 	.label {

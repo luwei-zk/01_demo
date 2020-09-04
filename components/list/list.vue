@@ -31,7 +31,7 @@
 				// 云函数获取的数据缓存
 				listCacheData: {},
 				// 上拉加载更多
-				load: {},//装载page 和 loading
+				load: {}, //装载page 和 loading
 				pageSize: 10
 			};
 		},
@@ -39,19 +39,21 @@
 			tab(newVal) {
 				if (newVal.length === 0)
 					return
+				// 解决 key 重复的问题
+				this.listCacheData = {}
+				this.load = {}
+				// 只有在 newVal 不为空时,才请求数据
 				this.getList(this.activeIndex)
 			}
 		},
 		// onload 是在页面中,created 是在组件中
 		created() {
-			
+
 		},
 		methods: {
 			// 选项卡自带滑动事件触发
 			change(e) {
-				const {
-					current
-				} = e.detail
+				const {current} = e.detail
 				this.$emit('change', current)
 				// 修复重复请求的问题
 				if (!this.listCacheData[current] || this.listCacheData[current] === 0) {
@@ -82,7 +84,7 @@
 						oldLoad.page = this.load[current].page
 						oldLoad.loading = 'noMore'
 						// 刷新对象
-						this.$set(this.load,current,oldLoad)
+						this.$set(this.load, current, oldLoad)
 						// 强制刷新页面
 						this.$forceUpdate()
 						return
@@ -96,7 +98,7 @@
 			},
 			loadmore() {
 				if (this.load[this.activeIndex].loading === 'noMore')
-				return
+					return
 				this.load[this.activeIndex].page++
 				this.getList(this.activeIndex)
 			}
