@@ -23,7 +23,7 @@
 			</view>
 			<!-- 显示搜索结果 -->
 			<list-scroll v-else class="list-scroll">
-				<list-card :item="item" v-for="item in searchList" :key="item._id"></list-card>
+				<list-card :item="item" v-for="item in searchList" :key="item._id" @click="setHistory"></list-card>
 			</list-scroll>
 		</view>
 	</view>
@@ -38,7 +38,10 @@
 			return {
 				// 显示搜索历史还是搜索结果
 				is_history: true,
-				searchList: []
+				// 从数据库获取的数据
+				searchList: [],
+				// 搜索输入的关键字
+				value: ''
 			}
 		},
 		computed: {
@@ -47,10 +50,17 @@
 		},
 		onLoad() {},
 		methods: {
+			//点击给 historyLists 添加值
+			setHistory() {
+				// 将 value 传递给 vuex
+				this.$store.dispatch('set_history',{
+					name: this.value
+				})
+			},
 			// 从首页搜索框传递过来
 			change(value) {
-				console.log('请求的数据是:',value)
-				
+				this.value = value
+				// 搜索内容为空
 				if (!value) {
 					clearTimeout(this.timer)
 					this.mark = false
@@ -72,6 +82,7 @@
 			// 		name: 'test'
 			// 	})
 			// }
+			// 搜索框搜索事件
 			getSearch(value) {
 				// 搜索内容为空
 				if (!value) {
