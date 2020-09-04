@@ -13,8 +13,13 @@ const store = new Vuex.Store({
 	},
 	// 修改数据源的值
 	mutations: {
+		// 添加历史记录
 		SET_HISTORY_LISTS(state, history) {
 			state.historyLists = history
+		},
+		// 清空历史记录
+		CLEAR_HISTORY_LISTS(state) {
+			state.historyLists = []
 		}
 	},
 	actions: {
@@ -28,6 +33,9 @@ const store = new Vuex.Store({
 			// 数组前面插入值
 			list.unshift(history)
 			commit('SET_HISTORY_LISTS', list)
+		},
+		clearHistory({commit}) {
+			commit('CLEAR_HISTORY_LISTS')
 		}
 	}
 })

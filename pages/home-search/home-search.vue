@@ -7,7 +7,7 @@
 				<!-- 第一行 -->
 				<view class="label-header">
 					<text class="label-title">搜索历史</text>
-					<text class="label-clear">清空</text>
+					<text class="label-clear" @click="clear">清空</text>
 				</view>
 				<!-- 搜索历史 -->
 				<view v-if="historyLists.length > 0" class="label-content">
@@ -88,6 +88,12 @@
 						this.getSearch(value)
 					}, 1000)
 				}
+			},
+			clear() {
+				this.$store.dispatch('clearHistory')
+				uni.showToast({
+					title: '清空完成'
+				})
 			},
 			// testBtn() {
 			// 	this.$store.dispatch('set_history', {
