@@ -27,6 +27,12 @@
 			}
 		},
 		onLoad() {
+			// 监听 标签页 自定义事件
+			uni.$on('labelChange', (res) => {
+				console.log('index首页监听到了 标签页数据:', res)
+			})
+
+			// 获取选项卡内容
 			this.getLabel()
 		},
 		methods: {

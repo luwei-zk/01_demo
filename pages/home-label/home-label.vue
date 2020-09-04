@@ -18,6 +18,7 @@
 			<view v-if="labelList.length === 0 && !loading" class="no-data">
 				当前没有数据
 			</view>
+			<button type="default" @click="emit">发送事件</button>
 		</view>
 		<!-- 标签推荐 -->
 		<view class="label-box">
@@ -52,6 +53,13 @@
 			this.getLabel()
 		},
 		methods: {
+			// 测试自定义事件 
+			// 编辑完成标签后,刷新首页标签
+			emit() {
+				// 第二个参数可以自选
+				uni.$emit('labelChange', 'uni-app')
+			},
+
 			// 编辑 标签点击事件
 			editLabel() {
 				// this.is_edit = !this.is_edit
