@@ -46,6 +46,8 @@
 				// true 正在编辑
 				if (this.is_edit) {
 					this.is_edit = false
+					// 编辑状态结束时,调用云函数保存数据
+					this.setUpdateLabel(this.labelList)
 				} else {
 					this.is_edit = true
 				}
@@ -60,6 +62,24 @@
 			del(index) {
 				this.list.push(this.labelList[index])
 				this.labelList.splice(index, 1)
+			},
+			setUpdateLabel(label) {
+				// 只要 ID
+				let newArrIds = []
+				label.forEach(item => {
+					newArrIds.push(item._id)
+				})
+				uni.showLoading()
+				// 调用云函数 将 ID 传递给云函数
+				this.$api.update_label({
+					label: newArrIds
+				}).then((res) => {
+					uni.hideLoading()
+					uni.showToast({
+						title: '更新成功',
+						icon: 'none'
+					})
+				})
 			},
 			// 调用云函数获取标签
 			getLabel() {
