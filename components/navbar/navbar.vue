@@ -9,7 +9,7 @@
 			<view class="navbar-content" :class="{search:isSearch}" :style="{height:navBarHeight + 'px',width: windowWidth + 'px'}"
 			 @click.stop="open">
 				<!-- 搜索页返回键 -->
-				<view v-if="isSearch" class="navbar-content_search-icons">
+				<view v-if="isSearch" class="navbar-content_search-icons" @click="back">
 					<uni-icons type="back" size="22" color="#fff"></uni-icons>
 				</view>
 				<!-- 搜索框 -->
@@ -75,6 +75,14 @@
 			// #endif
 		},
 		methods: {
+			// 搜索页返回事件
+			back() {
+				// uni.navigateTo 会打开新页面,本身页面不会关闭
+				// uni.navigateBack 返回上一页,页面刷新则无效
+				uni.switchTab({
+					url: '/pages/tabbar/index/index'
+				})
+			},
 			// 打开搜索页事件
 			open() {
 				// 阻止冒泡的同时,如果时搜索页点击,则返回
