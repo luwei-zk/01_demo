@@ -32,9 +32,7 @@
 		methods: {
 			getLabel() {
 				// console.log(this.$api)
-				this.$api.get_label({
-					name: 'get_label'
-				}).then((res) => {
+				this.$api.get_label().then((res) => {
 					const {
 						data
 					} = res
