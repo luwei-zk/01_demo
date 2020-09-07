@@ -87,7 +87,10 @@
 			open() {
 				// 传递给父组件 home-search
 				this.$emit('click',this.item)
-				console.log('打开详情页')
+				uni.navigateTo({
+					url:'/pages/home-detail/home-detail'
+				})
+				
 			}
 		}
 	}
