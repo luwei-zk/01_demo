@@ -55,7 +55,10 @@
 				})
 			},
 			// 从 tab传递过来的数据
-			tab({data,index}) {
+			tab({
+				data,
+				index
+			}) {
 				// 暂做保留
 				console.log(data, index);
 				this.activeIndex = index

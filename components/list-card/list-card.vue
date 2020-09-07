@@ -83,14 +83,26 @@
 
 			};
 		},
-		methods:{
+		methods: {
 			open() {
+				const item = this.item
 				// 传递给父组件 home-search
-				this.$emit('click',this.item)
+				this.$emit('click', item)
+				// 文章详情页数据，传递给 Home-detail
+				const params = {
+					_id: item._id,
+					title: item.title,
+					author: item.author,
+					create_time: item.create_time,
+					thumbs_up_count: item.thumbs_up_count,
+					browse_count: item.browse_count
+				}
+				// console.log(params)
+				// 打开详情页
 				uni.navigateTo({
-					url:'/pages/home-detail/home-detail'
+					url: '/pages/home-detail/home-detail?params=' + JSON.stringify(params)
 				})
-				
+
 			}
 		}
 	}
