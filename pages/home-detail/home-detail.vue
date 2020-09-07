@@ -19,7 +19,9 @@
 			</view>
 		</view>
 		<view class="detail-content">
-			{{formData.content}}
+			<view class="detail-html">
+				<u-parse :content="formData.content" :noData="noData"></u-parse>
+			</view>
 		</view>
 		<view class="detail-bottom">
 			<view class="detail-bottom_input">
@@ -42,18 +44,23 @@
 </template>
 
 <script>
+	import uParse from '@/components/gaoyia-parse/parse.vue'
 	export default {
+		components: {
+			uParse
+		},
 		data() {
 			return {
 				// list-card 传递过来的 文章数据
-				formData: {}
+				formData: {},
+				noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 			}
 		},
 		onLoad(query) {
 			// 获取list-card传递过来的文章数据
 			this.formData = JSON.parse(query.params)
 			this.getDetail()
-			
+
 		},
 		methods: {
 			// 获取详情信息
@@ -61,7 +68,9 @@
 				this.$api.get_detail({
 					article_id: this.formData._id
 				}).then((res) => {
-					const {data} = res
+					const {
+						data
+					} = res
 					this.formData = data
 					// console.log(res)
 				})
@@ -126,8 +135,14 @@
 	}
 
 	.detail-content {
-		height: 1000px;
-		border: 1px solid red;
+		margin-top: 20px;
+		min-height: 500px;
+
+		// border: 1px solid red;
+		.detail-html {
+			padding: 0 15px;
+		}
+
 	}
 
 	.detail-bottom {

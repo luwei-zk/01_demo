@@ -13,6 +13,9 @@
 </script>
 
 <style>
+	/*每个页面的公共css*/
+	@import url("/components/gaoyia-parse/parse.css");
+	
 	page {
 		height: 100%;
 	}
