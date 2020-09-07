@@ -40,3 +40,11 @@ export const update_label = (data) => {
 		data
 	})
 }
+
+export const get_detail = (data) => {
+	// data 为云函数的入参
+	return $http({
+		url: 'get_detail',
+		data
+	})
+}

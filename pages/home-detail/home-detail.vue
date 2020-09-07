@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view class="detail-content">
-			详情数据
+			{{formData.content}}
 		</view>
 		<view class="detail-bottom">
 			<view class="detail-bottom_input">
@@ -49,12 +49,23 @@
 				formData: {}
 			}
 		},
-		// 获取list-card传递过来的文章数据
 		onLoad(query) {
+			// 获取list-card传递过来的文章数据
 			this.formData = JSON.parse(query.params)
+			this.getDetail()
+			
 		},
 		methods: {
-
+			// 获取详情信息
+			getDetail() {
+				this.$api.get_detail({
+					article_id: this.formData._id
+				}).then((res) => {
+					const {data} = res
+					this.formData = data
+					// console.log(res)
+				})
+			}
 		}
 	}
 </script>
