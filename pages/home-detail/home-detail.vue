@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="detail-bottom">
-			<view class="detail-bottom_input">
+			<view class="detail-bottom_input" @click="openComment">
 				<text class="detail-bottom_input-text">谈谈你的看法</text>
 				<uni-icons type="compose" size="16" color="#F07373"></uni-icons>
 			</view>
@@ -40,6 +40,20 @@
 				</view>
 			</view>
 		</view>
+		<!-- ref 只能在组件中用，不能在view中用 -->
+		<!-- :maskClick="false" 蒙版点击是否关闭弹窗 -->
+		<uni-popup ref="popup" type="bottom" :maskClick="false">
+			<view class="popup-wrap">
+				<view class="popup-header">
+					<text class="popup-header_item" @click="close">取消</text>
+					<text class="popup-header_item" @click="submit">发布</text>
+				</view>
+				<view class="popup-content">
+					<textarea class="popup-textarea" v-model="commentsValue" maxlength="200" fixed placeholder="请输入评论内容" />
+					<view class="popup-count">{{commentsValue.length}}/200</view>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -53,9 +67,14 @@
 			return {
 				// list-card 传递过来的 文章数据
 				formData: {},
-				noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
+				// 未获取到文章之前显示
+				noData: '<p style="text-align:center;color:#666">详情加载中...</p>',
+				// 评论内容
+				commentsValue:''
 			}
 		},
+		// 页面所有节点渲染完成后
+		onReady() {},
 		onLoad(query) {
 			// 获取list-card传递过来的文章数据
 			this.formData = JSON.parse(query.params)
@@ -63,6 +82,20 @@
 
 		},
 		methods: {
+			// 打开发布评论窗口
+			openComment() {
+				// this.$refs.popup 拿到自定义组件的实例 自带一个 open 方法
+				this.$refs.popup.open()
+			},
+			// 关闭弹窗
+			close() {
+				this.$refs.popup.close()
+			},
+			// 发布评论
+			submit() {
+				console.log('发布')
+				this.$refs.popup.close()
+			},
 			// 获取详情信息
 			getDetail() {
 				this.$api.get_detail({
@@ -186,6 +219,36 @@
 				align-items: center;
 				justify-content: center;
 				width: 44px;
+			}
+		}
+	}
+	.popup-wrap {
+		background-color: #fff;
+		.popup-header {
+			display: flex;
+			justify-content: space-between;
+			font-size: 14px;
+			color: #666;
+			border-bottom: 1px #F5F5F5 solid;
+			.popup-header_item {
+				height: 50px;
+				line-height: 50px;
+				padding: 0 15px;
+			}
+		}
+		.popup-content {
+			width: 100%;
+			padding: 15px;
+			box-sizing: border-box;
+			.popup-textarea {
+				width: 100%;
+				height: 200px;
+			}
+			.popup-count {
+				display: flex;
+				justify-content: flex-end;
+				font-size: 12px;
+				color: #999;
 			}
 		}
 	}
