@@ -94,7 +94,26 @@
 			// 发布评论
 			submit() {
 				console.log('发布')
-				this.$refs.popup.close()
+				if (!this.commentsValue) {
+					uni.showToast({
+						title:'请出入评论内容',
+						icon:'none'
+					})
+					return
+				}
+				// 更新评论到数据库
+				this.setUpdateComment(this.commentsValue)
+			},
+			// 发布评论
+			setUpdateComment(content) {
+				this.$api.update_comment({
+					article_id: this.formData._id,
+					content					
+				}).then((res) => {
+					console.log(res)
+					// 关闭弹窗
+					this.close()
+				})
 			},
 			// 获取详情信息
 			getDetail() {
