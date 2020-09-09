@@ -20,7 +20,14 @@
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
-				<u-parse :content="formData.content" :noData="noData"></u-parse>
+				<!-- <u-parse :content="formData.content" :noData="noData"></u-parse> -->
+				内容
+			</view>
+			<view class="detail-comment">
+				<view class="comment-title">最新评论</view>
+				<view class="comment-content" >
+					<comments-box></comments-box>
+				</view>
 			</view>
 		</view>
 		<view class="detail-bottom">
@@ -106,11 +113,16 @@
 			},
 			// 发布评论
 			setUpdateComment(content) {
+				uni.showLoading()
 				this.$api.update_comment({
 					article_id: this.formData._id,
 					content					
 				}).then((res) => {
 					console.log(res)
+					uni.hideLoading()
+					uni.showToast({
+						title: '评论发布成功'
+					})
 					// 关闭弹窗
 					this.close()
 				})
@@ -193,6 +205,20 @@
 		// border: 1px solid red;
 		.detail-html {
 			padding: 0 15px;
+		}
+		
+		.detail-comment {
+			margin-top: 30px;
+			.comment-title {
+				padding: 10px 15px;
+				font-size: 14px;
+				color: #666;
+				border-bottom: 1px #f5f5ff solid;
+			}
+			.comment-content {
+				padding: 0 15px;
+				border-top: 1px #eee solid;
+			}
 		}
 
 	}
