@@ -25,8 +25,8 @@
 			</view>
 			<view class="detail-comment">
 				<view class="comment-title">最新评论</view>
-				<view class="comment-content" >
-					<comments-box></comments-box>
+				<view class="comment-content" v-for="item in commentsList" :key="item.comment_id">
+					<comments-box :comments="item"></comments-box>
 				</view>
 			</view>
 		</view>
@@ -77,7 +77,9 @@
 				// 未获取到文章之前显示
 				noData: '<p style="text-align:center;color:#666">详情加载中...</p>',
 				// 评论内容
-				commentsValue:''
+				commentsValue:'',
+				// 获取的评论列表
+				commentsList: []
 			}
 		},
 		// 页面所有节点渲染完成后
@@ -86,7 +88,7 @@
 			// 获取list-card传递过来的文章数据
 			this.formData = JSON.parse(query.params)
 			this.getDetail()
-
+			this.getComments()
 		},
 		methods: {
 			// 打开发布评论窗口
@@ -137,6 +139,16 @@
 					} = res
 					this.formData = data
 					// console.log(res)
+				})
+			},
+			// 请求评论内容
+			getComments() {
+				this.$api.get_comments({
+					article_id: this.formData._id
+				}).then((res) => {
+					// console.log(res)
+					const {data} = res // [ {},{},...]
+					this.commentsList = data
 				})
 			}
 		}

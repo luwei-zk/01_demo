@@ -2,21 +2,30 @@
 	<view class="comments-box">
 		<view class="comments-header">
 			<view class="comments-header_logo">
-				<image class="comments-header_logo-img" src="/static/logo.png" mode="aspectFill"></image>
+				<image class="comments-header_logo-img" :src="comments.author.avatar" mode="aspectFill"></image>
 			</view>
 			<view class="comments-header_info">
-				<view class="title">meHaotian</view>
-				<view>2020-03-20 11:11:11</view>
+				<view class="title">{{comments.author.author_name}}</view>
+				<view>{{comments.create_time}}</view>
 			</view>
 		</view>
 		<view class="comments-content">
-			<view>这是一条评论</view>
+			<view>{{comments.comment_content}}</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	export default {
+		props: {
+			// home-detail 传递过来的评论列表
+			comments: {
+				type: Object,
+				default () {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
 
