@@ -11,14 +11,25 @@
 		</view>
 		<view class="comments-content">
 			<view>{{comments.comment_content}}</view>
+			<view class="comments-info">
+				<view class="comments-button" @click="commentsReply(comments)">回复</view>
+			</view>
+			<view class="comments-reply" v-for="item in comments.replys" :key="item.comment_id">
+				<comments-box :comments="item"></comments-box>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import commentsBox from '@/components/comments-box/comments-box.vue'
 	export default {
+		// 自己引用自己 递归引用
+		components: {
+			commentsBox
+		},
 		props: {
-			// home-detail 传递过来的评论列表
+			// home-detail 传递过来的评论内容 {}
 			comments: {
 				type: Object,
 				default () {
@@ -32,7 +43,10 @@
 			};
 		},
 		methods: {
-
+			// 对评论的评论，传递给父组件
+			commentsReply(comment) {
+				this.$emit('reply', comment)
+			}
 		}
 	}
 </script>

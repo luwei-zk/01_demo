@@ -26,7 +26,7 @@
 			<view class="detail-comment">
 				<view class="comment-title">最新评论</view>
 				<view class="comment-content" v-for="item in commentsList" :key="item.comment_id">
-					<comments-box :comments="item"></comments-box>
+					<comments-box :comments="item" @reply='reply'></comments-box>
 				</view>
 			</view>
 		</view>
@@ -79,7 +79,9 @@
 				// 评论内容
 				commentsValue:'',
 				// 获取的评论列表
-				commentsList: []
+				commentsList: [],
+				// 评论的回复
+				replyFormData: {}
 			}
 		},
 		// 页面所有节点渲染完成后
@@ -111,15 +113,27 @@
 					return
 				}
 				// 更新评论到数据库
-				this.setUpdateComment(this.commentsValue)
+				this.setUpdateComment({content:this.commentsValue,...this.replyFormData})
+			},
+			// 对评论的评论
+			reply(e) {
+				this.replyFormData = {
+					"comment_id": e.comment_id
+				}
+				// console.log(e)
+				this.openComment()
 			},
 			// 发布评论
 			setUpdateComment(content) {
-				uni.showLoading()
-				this.$api.update_comment({
+				// 处理二次评论
+				const formdata = {
 					article_id: this.formData._id,
-					content					
-				}).then((res) => {
+					...content
+				}
+				console.log(formdata)
+				return // 暂时return，调试云函数
+				uni.showLoading()
+				this.$api.update_comment(formdata).then((res) => {
 					console.log(res)
 					uni.hideLoading()
 					uni.showToast({

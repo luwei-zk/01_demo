@@ -9,6 +9,7 @@ exports.main = async (event, context) => {
 		user_id, // 用户id
 		article_id, // 文章id
 		content, // 评论内容
+		comment_id = '' // 评论id，二次评论的时候新添加
 	} = event
 
 	let user = await db.collection('user').doc(user_id).get()
@@ -31,10 +32,18 @@ exports.main = async (event, context) => {
 		},
 		replys: []
 	}
-
+	
+	// 评论文章
+	if (comment_id === '') {
+		commentObj.replys = []
+		commentObj = dbCmd.unshift(commentObj)
+	} else {
+		// 回复对文章的评论
+	}
+	
 	// 更新内容到指定文章 不存在则添加字段
 	await db.collection('article').doc(article_id).update({
-		comments: dbCmd.unshift(commentObj)
+		comments: commentObj
 	})
 
 	//返回数据给客户端
