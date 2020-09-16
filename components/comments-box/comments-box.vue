@@ -25,6 +25,7 @@
 	import commentsBox from '@/components/comments-box/comments-box.vue'
 	export default {
 		// 自己引用自己 递归引用
+		name: "comments-box", // 新添加 不然会报错
 		components: {
 			commentsBox
 		},

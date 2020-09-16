@@ -130,8 +130,8 @@
 					article_id: this.formData._id,
 					...content
 				}
-				console.log(formdata)
-				return // 暂时return，调试云函数
+				// console.log(formdata)
+				// return // 暂时return，调试云函数
 				uni.showLoading()
 				this.$api.update_comment(formdata).then((res) => {
 					console.log(res)
@@ -139,6 +139,8 @@
 					uni.showToast({
 						title: '评论发布成功'
 					})
+					// 评论成功之后重新请求刷新页面
+					this.getComments()
 					// 关闭弹窗
 					this.close()
 				})

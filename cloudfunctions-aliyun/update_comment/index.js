@@ -19,6 +19,7 @@ exports.main = async (event, context) => {
 	const article = await db.collection('article').doc(article_id).get()
 	// 获取文章下的所有评论
 	const comments = article.data[0].comments
+	// console.log(JSON.stringify(comments))
 
 	let commentObj = {
 		comment_id: genID(5), // 评论id
@@ -32,15 +33,44 @@ exports.main = async (event, context) => {
 		},
 		replys: []
 	}
-	
+
 	// 评论文章
 	if (comment_id === '') {
 		commentObj.replys = []
 		commentObj = dbCmd.unshift(commentObj)
 	} else {
 		// 回复对文章的评论
+		// 获取评论索引
+		let commentIndex = comments.findIndex(item => item.comment_id === comment_id)
+		// 获取作者信息
+		let commentAuthor = comments.find(item => item.comment_id === comment_id)
+		commentAuthor = commentAuthor.author.author_name
+		commentObj.to = commentAuthor // 表示回复谁
+		// 更新回复信息
+		commentObj = {
+			// 在所有评论中找到当前评论
+			[commentIndex]: {
+				// 更新当前评论的值
+				replys: dbCmd.unshift(commentObj)
+			}
+		}
+		
+		/**
+		 示例： 更新数据中对象的值{name: 2}的值
+		 let obj = {
+			 arr:[{name:1},{name:2}]
+		 } 
+		 xxx.update({
+			 arr : {
+				 1: {
+					 name:3
+				 }
+			 }
+		 })
+		 
+		 */
 	}
-	
+
 	// 更新内容到指定文章 不存在则添加字段
 	await db.collection('article').doc(article_id).update({
 		comments: commentObj
