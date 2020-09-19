@@ -8,7 +8,7 @@ export default function $http(options) {
 
 	// 新声明一个对象，添加原data数据，增加一条新数据 user_id
 	const dataObj = {
-		user_id: '5f45afe33c788800019dfb0b',
+		user_id: '5f45afe33c788800019dfb0c',
 		...data
 	}
 

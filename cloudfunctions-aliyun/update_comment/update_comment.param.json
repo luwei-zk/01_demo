@@ -6,5 +6,7 @@
 	"user_id": "5f45afe33c788800019dfb0b",
 	"article_id": "5f45afe0875241000188959f",
 	"comment_id": "7bhqqbflj680",
-	"content": "回复成功"
+	"reply_id": "1eshq1f2gu00",
+	"is_reply": true,
+	"content": "子回复成功"
 }

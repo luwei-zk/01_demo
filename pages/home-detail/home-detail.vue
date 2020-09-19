@@ -116,11 +116,15 @@
 				this.setUpdateComment({content:this.commentsValue,...this.replyFormData})
 			},
 			// 对评论的评论
-			reply(e) {
+			reply(e){
 				this.replyFormData = {
-					"comment_id": e.comment_id
+					"comment_id":e.comments.comment_id,
+					"is_reply": e.is_reply
 				}
-				// console.log(e)
+				if(e.comments.reply_id){
+					this.replyFormData.reply_id = e.comments.reply_id
+				}
+				console.log(this.replyFormData);
 				this.openComment()
 			},
 			// 发布评论
@@ -143,6 +147,10 @@
 					this.getComments()
 					// 关闭弹窗
 					this.close()
+					// 防止正常的评论与二次评论冲突
+					this.replyFormData = {}
+					// 评论之后清空输入框
+					this.commentsValue = ''
 				})
 			},
 			// 获取详情信息
