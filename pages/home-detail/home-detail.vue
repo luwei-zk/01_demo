@@ -11,12 +11,13 @@
 				<view class="detail-header_content-title">
 					{{formData.author.author_name}}
 				</view>
-				<view class="listcard-content_info">
-					<text class="listcard-content_info-text">{{formData.create_time}}</text>
-					<text class="listcard-content_info-text">{{formData.browse_count}}浏览</text>
-					<text class="listcard-content_info-text">{{formData.thumbs_up_count}}赞</text>
+				<view class="detail-header_content-info">
+					<text class="detail-header_content-info-text">{{formData.create_time}}</text>
+					<text class="detail-header_content-info-text">{{formData.browse_count}}浏览</text>
+					<text class="detail-header_content-info-text">{{formData.thumbs_up_count}}赞</text>
 				</view>
 			</view>
+			<button class="detail-header_button" type="default">关注</button>
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
@@ -104,7 +105,6 @@
 			},
 			// 发布评论
 			submit() {
-				console.log('发布')
 				if (!this.commentsValue) {
 					uni.showToast({
 						title:'请出入评论内容',
@@ -179,7 +179,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.detail {
 		padding: 15px 0;
 		padding-bottom: 54px;
@@ -205,7 +205,7 @@
 			border-radius: 50%;
 			overflow: hidden;
 
-			.detail-header_logo-img {
+			image {
 				width: 100%;
 				height: 100%;
 			}
@@ -224,25 +224,32 @@
 				color: #333;
 			}
 
-			.listcard-content_info {
+			.detail-header_content-info {
 				color: #999;
 
-				.listcard-content_info-text {
+				.detail-header_content-info-text {
 					margin-right: 10px;
 				}
 			}
+		}
+		.detail-header_button {
+			padding: 0 15px;
+			flex-shrink: 0;
+			height: 30px;
+			line-height: 30px;
+			border-radius: 5px;
+			font-size: 12px;
+			color: #fff;
+			background-color: $mk-base-color;
 		}
 	}
 
 	.detail-content {
 		margin-top: 20px;
 		min-height: 500px;
-
-		// border: 1px solid red;
 		.detail-html {
-			padding: 0 15px;
+			padding:0 15px;
 		}
-		
 		.detail-comment {
 			margin-top: 30px;
 			.comment-title {
@@ -256,7 +263,6 @@
 				border-top: 1px #eee solid;
 			}
 		}
-
 	}
 
 	.detail-bottom {
@@ -267,7 +273,7 @@
 		align-items: center;
 		width: 100%;
 		height: 44px;
-		border-top: 1px solid #f5f5f5;
+		border-top: 1px #f5f5f5 solid;
 		background-color: #fff;
 		box-sizing: border-box;
 
@@ -279,14 +285,13 @@
 			padding: 0 10px;
 			width: 100%;
 			height: 30px;
-			border: 1px solid #ddd;
+			border: 1px #ddd solid;
 			border-radius: 5px;
 
-			.detail-bottom_input-text {
+			.detail-header_content-info-text {
 				font-size: 14px;
 				color: #999;
 			}
-
 		}
 
 		.detail-bottom_icons {
@@ -300,36 +305,6 @@
 				align-items: center;
 				justify-content: center;
 				width: 44px;
-			}
-		}
-	}
-	.popup-wrap {
-		background-color: #fff;
-		.popup-header {
-			display: flex;
-			justify-content: space-between;
-			font-size: 14px;
-			color: #666;
-			border-bottom: 1px #F5F5F5 solid;
-			.popup-header_item {
-				height: 50px;
-				line-height: 50px;
-				padding: 0 15px;
-			}
-		}
-		.popup-content {
-			width: 100%;
-			padding: 15px;
-			box-sizing: border-box;
-			.popup-textarea {
-				width: 100%;
-				height: 200px;
-			}
-			.popup-count {
-				display: flex;
-				justify-content: flex-end;
-				font-size: 12px;
-				color: #999;
 			}
 		}
 	}
