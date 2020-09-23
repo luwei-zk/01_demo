@@ -2,8 +2,8 @@
 const db = uniCloud.database()
 const $ = db.command.aggregate
 exports.main = async (event, context) => {
+	
 	const {
-		// 客户端传入的两个参数
 		user_id,
 		article_id
 	} = event
@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
 		.aggregate() // 添加三个字段
 		.addFields({
 			// 是否关注作者
-			is_author_like: $.in(['$author_id', user.author_likes_ids]),
+			is_author_like: $.in(['$author.id', user.author_likes_ids]),
 			// 是否收藏文章
 			is_like: $.in(['$_id', user.article_likes_ids]),
 			// 是否点赞

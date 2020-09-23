@@ -17,7 +17,7 @@
 					<text class="detail-header_content-info-text">{{formData.thumbs_up_count}}赞</text>
 				</view>
 			</view>
-			<button class="detail-header_button" type="default">关注</button>
+			<button class="detail-header_button" type="default" @click="follow(formData.author.id)">{{formData.is_author_like?'取消关注':'关注'}}</button>
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
@@ -94,6 +94,11 @@
 			this.getComments()
 		},
 		methods: {
+			// 关注作者
+			follow(author_id) {
+				console.log('关注')
+				this.setUpdateAuthor(author_id)
+			},
 			// 打开发布评论窗口
 			openComment() {
 				// this.$refs.popup 拿到自定义组件的实例 自带一个 open 方法
@@ -162,7 +167,6 @@
 						data
 					} = res
 					this.formData = data
-					// console.log(res)
 				})
 			},
 			// 请求评论内容
@@ -173,6 +177,19 @@
 					// console.log(res)
 					const {data} = res // [ {},{},...]
 					this.commentsList = data
+				})
+			},
+			setUpdateAuthor(author_id){
+				uni.showLoading()
+				this.$api.update_author({
+					author_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.formData.is_author_like = !this.formData.is_author_like
+					uni.showToast({
+						title:this.formData.is_author_like?'关注作者成功':'取消关注作者',
+						icon:'none'
+					})
 				})
 			}
 		}
@@ -288,7 +305,7 @@
 			border: 1px #ddd solid;
 			border-radius: 5px;
 
-			.detail-header_content-info-text {
+			.detail-bottom_input-text {
 				font-size: 14px;
 				color: #999;
 			}
@@ -308,4 +325,36 @@
 			}
 		}
 	}
+
+	.popup-wrap {
+			background-color: #fff;
+			.popup-header {
+				display: flex;
+				justify-content: space-between;
+				font-size: 14px;
+				color: #666;
+				border-bottom: 1px #F5F5F5 solid;
+				.popup-header__item {
+					height: 50px;
+					line-height: 50px;
+					padding: 0 15px;
+				}
+			}
+			.popup-content {
+				width: 100%;
+				padding: 15px;
+				box-sizing: border-box;
+				.popup-textarea {
+					width: 100%;
+					height: 200px;
+					
+				}
+				.popup-count {
+					display: flex;
+					justify-content: flex-end;
+					font-size: 12px;
+					color: #999;
+				}
+			}
+		}
 </style>
