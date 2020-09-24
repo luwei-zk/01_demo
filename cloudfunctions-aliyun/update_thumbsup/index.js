@@ -18,12 +18,19 @@ exports.main = async (event, context) => {
 			msg: '您已经点过赞了'
 		}
 	} else {
+		// 用户表中标记用户点赞了文章
 		thumbs_ids = dbCmd.addToSet(article_id)
 	}
 	
-	// 更新
+	// 用户表中 用户收藏该文章
 	await db.collection('user').doc(user_id).update({
 		thumbs_up_article_ids: thumbs_ids
+	})
+	
+	// 文章表中 文章点赞数+1
+	await db.collection('article').doc(article_id).update({
+		// inc 原子操作 ，减少一次请求
+		thumbs_up_count:dbCmd.inc(1)
 	})
 
 	//返回数据给客户端

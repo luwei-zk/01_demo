@@ -43,8 +43,8 @@
 				<view class="detail-bottom_icons-box" @click="likeTap(formData._id)">
 					<uni-icons :type="formData.is_like?'heart-filled':'heart'" size="22" color="#F07373"></uni-icons>
 				</view>
-				<view class="detail-bottom_icons-box">
-					<uni-icons type="hand-thumbsup" size="22" color="#F07373"></uni-icons>
+				<view class="detail-bottom_icons-box" @click="thumbsup(formData._id)">
+					<uni-icons :type="formData.is_thumbs_up?'hand-thumbsup-filled':'hand-thumbsup'" size="22" color="#F07373"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -94,9 +94,12 @@
 			this.getComments()
 		},
 		methods: {
+			// 点赞
+			thumbsup(article_id){
+				this.setUpdateThumbs(article_id)
+			},
 			// 收藏文章
 			likeTap(article_id){
-				console.log('收藏文章');
 				this.setUpadteLike(article_id)
 			},
 			// 关注作者
@@ -206,11 +209,26 @@
 				}).then(res=>{
 					uni.hideLoading()
 					this.formData.is_like = !this.formData.is_like
+					// 自定义事件,同步到其他页面
+					uni.$emit('update_article')
 					uni.showToast({
 						title:this.formData.is_like ?'收藏成功':'取消收藏',
 						icon:'none'
 					})
-					console.log('收藏成功');
+				})
+			},
+			// 点赞文章
+			setUpdateThumbs(article_id){
+				uni.showLoading()
+				this.$api.update_thumbsup({
+					article_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.formData.is_thumbs_up = true
+					this.formData.thumbs_up_count++
+					uni.showToast({
+						title:res.msg
+					})
 				})
 			}
 		}

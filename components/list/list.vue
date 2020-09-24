@@ -37,8 +37,7 @@
 		},
 		watch: {
 			tab(newVal) {
-				if (newVal.length === 0)
-					return
+				if (newVal.length === 0) return
 				// 解决 key 重复的问题
 				this.listCacheData = {}
 				this.load = {}
@@ -48,15 +47,29 @@
 		},
 		// onload 是在页面中,created 是在组件中
 		created() {
-
+			// 接收监听的从home-detail传递过来的自定义事件
+			// 同步更新首页文章收藏状态
+			uni.$on('update_article', () => {
+				// 防止key重复
+				this.listCacheData = {}
+				this.load = {}
+				this.getList(this.activeIndex)
+			})
 		},
 		methods: {
+			loadmore() {
+				if (this.load[this.activeIndex].loading === 'noMore') return
+				this.load[this.activeIndex].page++
+				this.getList(this.activeIndex)
+			},
 			// 选项卡自带滑动事件触发
 			change(e) {
-				const {current} = e.detail
+				const {
+					current
+				} = e.detail
 				this.$emit('change', current)
 				// 修复重复请求的问题
-				if (!this.listCacheData[current] || this.listCacheData[current] === 0) {
+				if (!this.listCacheData[current] || this.listCacheData[current].length === 0) {
 					this.getList(current)
 				}
 			},
@@ -81,8 +94,8 @@
 					if (data.length === 0) {
 						let oldLoad = {}
 						// data 数据为空时，page 是不存在的
-						oldLoad.page = this.load[current].page
 						oldLoad.loading = 'noMore'
+						oldLoad.page = this.load[current].page
 						// 刷新对象
 						this.$set(this.load, current, oldLoad)
 						// 强制刷新页面
@@ -95,12 +108,6 @@
 					// 懒加载数据
 					this.$set(this.listCacheData, current, oldList)
 				})
-			},
-			loadmore() {
-				if (this.load[this.activeIndex].loading === 'noMore')
-					return
-				this.load[this.activeIndex].page++
-				this.getList(this.activeIndex)
 			}
 		}
 	}
