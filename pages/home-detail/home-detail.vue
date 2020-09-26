@@ -21,8 +21,7 @@
 		</view>
 		<view class="detail-content">
 			<view class="detail-html">
-				<!-- <u-parse :content="formData.content" :noData="noData"></u-parse> -->
-				内容
+				<u-parse :content="formData.content" :noData="noData"></u-parse>
 			</view>
 			<view class="detail-comment">
 				<view class="comment-title">最新评论</view>
@@ -95,7 +94,6 @@
 			},
 			// 关注作者
 			follow(author_id) {
-				console.log('关注')
 				this.setUpdateAuthor(author_id)
 			},
 			// 打开发布评论窗口
@@ -123,7 +121,6 @@
 				if (e.comments.reply_id) {
 					this.replyFormData.reply_id = e.comments.reply_id
 				}
-				console.log(this.replyFormData);
 				this.openComment()
 			},
 			// 发布评论
