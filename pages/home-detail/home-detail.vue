@@ -50,21 +50,9 @@
 		</view>
 		<!-- ref 只能在组件中用，不能在view中用 -->
 		<!-- :maskClick="false" 蒙版点击是否关闭弹窗 -->
-		<uni-popup ref="popup" type="bottom" :maskClick="false">
-			<view class="popup-wrap">
-				<view class="popup-header">
-					<text class="popup-header_item" @click="close">取消</text>
-					<text class="popup-header_item" @click="submit">发布</text>
-				</view>
-				<view class="popup-content">
-					<textarea class="popup-textarea" v-model="commentsValue" maxlength="200" fixed placeholder="请输入评论内容" />
-					<view class="popup-count">{{commentsValue.length}}/200</view>
-				</view>
-			</view>
-		</uni-popup>
+		<release ref="popup" @submit="submit"></release>
 	</view>
 </template>
-
 <script>
 	import uParse from '@/components/gaoyia-parse/parse.vue'
 	export default {
@@ -77,16 +65,13 @@
 				formData: {},
 				// 未获取到文章之前显示
 				noData: '<p style="text-align:center;color:#666">详情加载中...</p>',
-				// 评论内容
-				commentsValue:'',
 				// 获取的评论列表
 				commentsList: [],
 				// 评论的回复
-				replyFormData: {}
+				replyFormData: {},
+				showPopup: false
 			}
 		},
-		// 页面所有节点渲染完成后
-		onReady() {},
 		onLoad(query) {
 			// 获取list-card传递过来的文章数据
 			this.formData = JSON.parse(query.params)
@@ -95,17 +80,17 @@
 		},
 		methods: {
 			// 打开评论列表页面并携带参数
-			open(){
+			open() {
 				uni.navigateTo({
-					url:'../detail-comments/detail-comments?id='+this.formData._id
+					url: '../detail-comments/detail-comments?id=' + this.formData._id
 				})
 			},
 			// 点赞
-			thumbsup(article_id){
+			thumbsup(article_id) {
 				this.setUpdateThumbs(article_id)
 			},
 			// 收藏文章
-			likeTap(article_id){
+			likeTap(article_id) {
 				this.setUpadteLike(article_id)
 			},
 			// 关注作者
@@ -123,24 +108,19 @@
 				this.$refs.popup.close()
 			},
 			// 发布评论
-			submit() {
-				if (!this.commentsValue) {
-					uni.showToast({
-						title:'请出入评论内容',
-						icon:'none'
-					})
-					return
-				}
-				// 更新评论到数据库
-				this.setUpdateComment({content:this.commentsValue,...this.replyFormData})
+			submit(content) {
+				this.setUpdateComment({
+					content,
+					...this.replyFormData
+				})
 			},
 			// 对评论的评论
-			reply(e){
+			reply(e) {
 				this.replyFormData = {
-					"comment_id":e.comments.comment_id,
+					"comment_id": e.comments.comment_id,
 					"is_reply": e.is_reply
 				}
-				if(e.comments.reply_id){
+				if (e.comments.reply_id) {
 					this.replyFormData.reply_id = e.comments.reply_id
 				}
 				console.log(this.replyFormData);
@@ -189,51 +169,53 @@
 					article_id: this.formData._id
 				}).then((res) => {
 					// console.log(res)
-					const {data} = res // [ {},{},...]
+					const {
+						data
+					} = res // [ {},{},...]
 					this.commentsList = data
 				})
 			},
 			// 关注作者
-			setUpdateAuthor(author_id){
+			setUpdateAuthor(author_id) {
 				uni.showLoading()
 				this.$api.update_author({
 					author_id
-				}).then(res=>{
+				}).then(res => {
 					uni.hideLoading()
 					this.formData.is_author_like = !this.formData.is_author_like
 					uni.showToast({
-						title:this.formData.is_author_like?'关注作者成功':'取消关注作者',
-						icon:'none'
+						title: this.formData.is_author_like ? '关注作者成功' : '取消关注作者',
+						icon: 'none'
 					})
 				})
 			},
 			// 收藏文章
-			setUpadteLike(article_id){
+			setUpadteLike(article_id) {
 				uni.showLoading()
 				this.$api.update_like({
 					article_id
-				}).then(res=>{
+				}).then(res => {
 					uni.hideLoading()
 					this.formData.is_like = !this.formData.is_like
 					// 自定义事件,同步到其他页面
 					uni.$emit('update_article')
 					uni.showToast({
-						title:this.formData.is_like ?'收藏成功':'取消收藏',
-						icon:'none'
+						title: this.formData.is_like ? '收藏成功' : '取消收藏',
+						icon: 'none'
 					})
 				})
 			},
 			// 点赞文章
-			setUpdateThumbs(article_id){
+			setUpdateThumbs(article_id) {
 				uni.showLoading()
 				this.$api.update_thumbsup({
 					article_id
-				}).then(res=>{
+				}).then(res => {
 					uni.hideLoading()
 					this.formData.is_thumbs_up = true
 					this.formData.thumbs_up_count++
 					uni.showToast({
-						title:res.msg
+						title: res.msg
 					})
 				})
 			}
@@ -294,6 +276,7 @@
 				}
 			}
 		}
+
 		.detail-header_button {
 			padding: 0 15px;
 			flex-shrink: 0;
@@ -309,17 +292,21 @@
 	.detail-content {
 		margin-top: 20px;
 		min-height: 500px;
+
 		.detail-html {
-			padding:0 15px;
+			padding: 0 15px;
 		}
+
 		.detail-comment {
 			margin-top: 30px;
+
 			.comment-title {
 				padding: 10px 15px;
 				font-size: 14px;
 				color: #666;
 				border-bottom: 1px #f5f5ff solid;
 			}
+
 			.comment-content {
 				padding: 0 15px;
 				border-top: 1px #eee solid;
@@ -370,36 +357,4 @@
 			}
 		}
 	}
-
-	.popup-wrap {
-			background-color: #fff;
-			.popup-header {
-				display: flex;
-				justify-content: space-between;
-				font-size: 14px;
-				color: #666;
-				border-bottom: 1px #F5F5F5 solid;
-				.popup-header__item {
-					height: 50px;
-					line-height: 50px;
-					padding: 0 15px;
-				}
-			}
-			.popup-content {
-				width: 100%;
-				padding: 15px;
-				box-sizing: border-box;
-				.popup-textarea {
-					width: 100%;
-					height: 200px;
-					
-				}
-				.popup-count {
-					display: flex;
-					justify-content: flex-end;
-					font-size: 12px;
-					color: #999;
-				}
-			}
-		}
 </style>
