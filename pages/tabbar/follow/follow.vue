@@ -9,7 +9,7 @@
 		</view>
 
 		<view class="follow-list">
-			<swiper class="follow-list__swiper" :current="activeIndex">
+			<swiper class="follow-list__swiper" :current="activeIndex" @change="change">
 				<swiper-item>
 					<list-scroll>
 						<!-- 初始化获取收藏的文章时，添加正在加载事件 -->
@@ -20,7 +20,9 @@
 					</list-scroll>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<view class="swiper-item">作者</view>
+					<list-scroll>
+						<list-author v-for="item in 100"></list-author>
+					</list-scroll>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -31,7 +33,7 @@
 	export default {
 		data() {
 			return {
-				activeIndex: 0,
+				activeIndex: 1,
 				list: [],
 				articleShow: false,
 			}
@@ -46,6 +48,9 @@
 			this.getFollow()
 		},
 		methods: {
+			change(e) {
+				this.activeIndex = e.detail.current
+			},
 			tab(index) {
 				this.activeIndex = index
 			},
