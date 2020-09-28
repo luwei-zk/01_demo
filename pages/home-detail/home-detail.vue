@@ -134,7 +134,7 @@
 				// return // 暂时return，调试云函数
 				uni.showLoading()
 				this.$api.update_comment(formdata).then((res) => {
-					console.log(res)
+					// console.log(res)
 					uni.hideLoading()
 					uni.showToast({
 						title: '评论发布成功'
@@ -195,7 +195,7 @@
 					uni.hideLoading()
 					this.formData.is_like = !this.formData.is_like
 					// 自定义事件,同步到其他页面
-					uni.$emit('update_article')
+					uni.$emit('update_article','follow')
 					uni.showToast({
 						title: this.formData.is_like ? '收藏成功' : '取消收藏',
 						icon: 'none'

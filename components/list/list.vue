@@ -1,6 +1,6 @@
 <template>
 	<swiper class="home-swiper" :current="activeIndex" @change="change">
-		<swiper-item v-for="(item,index) in tab" :key="index" class="swiper-item">
+		<swiper-item v-for="(item, index) in tab" :key="index" class="swiper-item">
 			<list-item :list='listCacheData[index]' :load="load[index]" @loadmore="loadmore"></list-item>
 		</swiper-item>
 	</swiper>
@@ -49,11 +49,13 @@
 		created() {
 			// 接收监听的从home-detail传递过来的自定义事件
 			// 同步更新首页文章收藏状态
-			uni.$on('update_article', () => {
-				// 防止key重复
-				this.listCacheData = {}
-				this.load = {}
-				this.getList(this.activeIndex)
+			uni.$on('update_article', (e) => {
+				// console.log(e);
+				if (e === 'follow') {
+					this.listCacheData = {}
+					this.load = {}
+					this.getList(this.activeIndex)
+				}
 			})
 		},
 		methods: {

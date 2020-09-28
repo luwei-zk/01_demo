@@ -12,7 +12,11 @@
 			<swiper class="follow-list__swiper" :current="activeIndex">
 				<swiper-item>
 					<list-scroll>
-						<list-card v-for="item in list" :key="item._id" :item="item"></list-card>
+						<!-- 初始化获取收藏的文章时，添加正在加载事件 -->
+						<uni-load-more v-if="list.length === 0 && !articleShow" iconType="snow" status="loading"></uni-load-more>
+						<list-card v-for="item in list" :key="item._id" types="follow" :item="item"></list-card>
+						<!-- 当没有收藏任何文章时，显示 -->
+						<view class="no-data" v-if="articleShow">没有收藏文章</view>
 					</list-scroll>
 				</swiper-item>
 				<swiper-item class="swiper-item">
@@ -29,9 +33,16 @@
 			return {
 				activeIndex: 0,
 				list: [],
+				articleShow: false,
 			}
 		},
 		onLoad() {
+			// 自定义事件，$on 只能 在打开的页面触发
+			// 首页点击 收藏 的时候，此页面收藏状态也发生改变
+			uni.$on('update_article', () => {
+				// console.log('关注页面触发');
+				this.getFollow()
+			})
 			this.getFollow()
 		},
 		methods: {
@@ -44,6 +55,7 @@
 						data
 					} = res
 					this.list = data
+					this.articleShow = this.list.length === 0 ? true : false
 				})
 			},
 		}

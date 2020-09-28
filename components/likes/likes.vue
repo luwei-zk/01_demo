@@ -47,7 +47,8 @@
 						title: this.like ? '收藏成功' : '取消收藏',
 						icon: 'none'
 					})
-
+					//发送自定义事件
+					uni.$emit('update_article', this.types)
 				}).catch(() => { //请求错误时关闭
 					uni.hideLoading()
 				})
