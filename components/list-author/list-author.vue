@@ -1,15 +1,15 @@
 <template>
 	<view class="listauthor">
 		<view class="listauthor-image">
-			<image class="listauthor-image-img" src="/static/logo.png" mode="aspectFill"></image>
+			<image :src="item.avatar" mode="aspectFill"></image>
 		</view>
 		<view class="listauthor-content">
-			<view class="listauthor-content__title">mehaotian</view>
+			<view class="listauthor-content__title">{{item.author_name}}</view>
 			<view class="listauthor-content__des">
-				<view class="listauthor-content__des-label">前端工程师</view>
+				<view class="listauthor-content__des-label">{{item.professional}}</view>
 				<view class="listauthor-content__des-info">
-					<text class="listauthor-content__des-info-text">发帖 111</text>
-					<text class="listauthor-content__des-info-text">粉丝 1234</text>
+					<text>发帖 {{item.article_ids.length}}</text>
+					<text>粉丝 {{item.fans_count}}</text>
 				</view>
 			</view>
 		</view>
@@ -18,6 +18,14 @@
 
 <script>
 	export default {
+		props: {
+			item: {
+				type: Object,
+				default () {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
 
@@ -26,7 +34,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.listauthor {
 		display: flex;
 		padding: 10px 0;
@@ -41,7 +49,7 @@
 			height: 40px;
 			overflow: hidden;
 
-			.listauthor-image-img {
+			image {
 				width: 100%;
 				height: 100%;
 			}
@@ -76,7 +84,7 @@
 					color: #999;
 					line-height: 1.5;
 
-					.listauthor-content__des-info-text:first-child {
+					text:first-child {
 						margin-right: 10px;
 					}
 				}
