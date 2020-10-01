@@ -15,6 +15,7 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -24,6 +25,14 @@
 				tabIndex: 0,
 				// tab 组件传递给 list 组件，上-下联动
 				activeIndex: 0
+			}
+		},
+		computed:{
+			...mapState(['userinfo'])
+		},
+		watch:{
+			userinfo(newVal){
+				this.getLabel()
 			}
 		},
 		onLoad() {
@@ -36,9 +45,6 @@
 				// 重新发送事件
 				this.getLabel()
 			})
-
-			// 获取选项卡内容
-			this.getLabel()
 		},
 		methods: {
 			getLabel() {
