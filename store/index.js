@@ -9,13 +9,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	// 数据源
 	state: {
-		// historyLists: []
-		// 从本地缓存中去读，不存在返回空数组
+		userinfo: uni.getStorageSync('USERINFO') || {},
 		historyLists: uni.getStorageSync("__history") || []
 	},
 	// 修改数据源的值
 	mutations: {
-		// 添加历史记录
+		SET_USER_INFO(state, userinfo) {
+			state.userinfo = userinfo
+		},
 		SET_HISTORY_LISTS(state, history) {
 			// 把所有的历史记录都添加上来了，不是一条
 			// history [ {name:'前端'},{name:'前端'} ]
@@ -24,12 +25,20 @@ const store = new Vuex.Store({
 		// 清空历史记录
 		CLEAR_HISTORY_LISTS(state) {
 			state.historyLists = []
-		}
+		},
+
 	},
 	actions: {
+		set_userinfo({commit}, userinfo) {
+			uni.setStorageSync('USERINFO', userinfo)
+			commit('SET_USER_INFO', userinfo)
+		},
 		// 添加历史记录 history 从客户端传进来的
 		// 页面调用 此方法，该方法的commit调用SET_HISTORY_LISTS修改historyLists
-		set_history({commit,state}, history) {
+		set_history({
+			commit,
+			state
+		}, history) {
 			// history: {name: '前端'} 只是一条
 			// list: [ {name:'前端'},{name:'前端'} ]
 			let list = state.historyLists
@@ -45,7 +54,9 @@ const store = new Vuex.Store({
 			uni.setStorageSync('__history', list)
 			commit('SET_HISTORY_LISTS', list)
 		},
-		clearHistory({commit}) {
+		clearHistory({
+			commit
+		}) {
 			// 将本地缓存置空
 			// uni.setStorageSync('__history', []) 这个也行
 			uni.removeStorageSync('__history')
