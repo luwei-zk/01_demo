@@ -6,15 +6,15 @@
 			</view>
 		<view class="feedback-title">反馈图片：</view>
 		<view class="feedback-image-box">
-			<view class="feedback-image-item">
-				<view class="close-icon">
+			<view class="feedback-image-item" v-for="(item,index) in imageLists" :key="index">
+				<view class="close-icon" @click="del(index)">
 					<uni-icons type="closeempty" size="18" color="#fff"></uni-icons>
 				</view>
 				<view class="image-box">
-					<image src="../../static/logo.png" mode="aspectFill"></image>
+					<image :src="item.url" mode="aspectFill"></image>
 				</view>
 			</view>
-			<view class="feedback-image-item">
+			<view v-if="imageLists.length < 5" class="feedback-image-item" @click="addImage">
 				<view class="image-box">
 					<uni-icons type="plusempty" size="50" color="#eee"></uni-icons>
 				</view>
@@ -28,11 +28,32 @@
 	export default {
 		data() {
 			return {
-				
+				imageLists:[]
 			}
 		},
 		methods: {
-			
+			// 删除图片
+			del(index){
+				this.imageLists.splice(index,1)
+			},
+			// 添加图片
+			addImage(){
+				const count = 5 - this.imageLists.length
+				uni.chooseImage({
+					count:count, // h5页面，此字段是不生效的
+					success:(res)=> { // 注意此处的箭头，否则 this将指向uni.chooseImage
+						const tempfilepaths = res.tempFilePaths
+						tempfilepaths.forEach((item,index)=>{
+							// 处理 h5 多选的状况
+							if(index<count){
+								this.imageLists.push({
+									url:item
+								})
+							}
+						})
+					}
+				})
+			},
 		}
 	}
 </script>
