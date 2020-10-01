@@ -51,6 +51,10 @@
 				"navigationBarTitleText": "我的文章"
 			}
         }
+        ,{
+            "path" : "pages/feedback/feedback",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle":"white",
