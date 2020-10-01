@@ -2,7 +2,7 @@
 	<view>
 		<view class="feedback-title">意见反馈：</view>
 		<view class="feedback-content">
-			<textarea class="feedback-textarea" placeholder="请输入您要反馈的问题" />
+			<textarea class="feedback-textarea" v-model="content" placeholder="请输入您要反馈的问题" />
 			</view>
 		<view class="feedback-title">反馈图片：</view>
 		<view class="feedback-image-box">
@@ -20,7 +20,7 @@
 				</view>
 			</view>
 		</view>
-		<button class="feedback-button" type="primary">提交反馈意见</button>
+		<button class="feedback-button" type="primary" @click="submit">提交反馈意见</button>
 	</view>
 </template>
 
@@ -28,6 +28,7 @@
 	export default {
 		data() {
 			return {
+				content:'',
 				imageLists:[]
 			}
 		},
@@ -54,6 +55,54 @@
 					}
 				})
 			},
+			async submit(){
+				// 存放已经上传的图片的网络路径
+				let imagesPath = []
+				uni.showLoading()
+				// 不支持多图上传，一次上传一张
+				// 不能使用 forEach 异步的方法，要不然不知道将来上传的是哪一张
+				for(let i = 0 ; i < this.imageLists.length;i++){
+					const filePath = this.imageLists[i].url
+					filePath =  await this.uploadFiles(filePath,i) // 调用下面的函数
+					imagesPath.push(filePath) // 存放已经上传的图片的网络路径
+				}
+				// console.log(imagesPath);
+				// 图片上传成功后，更新图片的网络地址到 feedback 数据库 (手动创建)
+				this.updateFeedback({
+					content:this.content,
+					feedbackImages:imagesPath
+				})
+			},
+			// 上传图片
+			async uploadFiles(filePath,i){
+				const result = await uniCloud.uploadFile({
+					filePath:filePath,
+					cloudPath: i + '.jpg' // 云文件名
+				})
+				// console.log(result);
+				return result.fileID // fileID 文件上传成功后的网络路径
+			},
+			// 更新网络图片地址到数据库
+			updateFeedback({content,feedbackImages}){
+				this.$api.update_feedback({content,feedbackImages}).then(res=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:"反馈提交成功",
+						icon:'none'
+					})
+					setTimeout(()=>{
+						uni.switchTab({
+							url:'/pages/tabbar/my/my'
+						})
+					},2000)
+				}).catch(()=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:"反馈提交失败 ",
+						icon:"none"
+					})
+				})
+			}
 		}
 	}
 </script>
